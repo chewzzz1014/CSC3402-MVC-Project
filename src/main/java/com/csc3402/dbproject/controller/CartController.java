@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/cart")
 public class CartController {
 
-    @GetMapping("/")
+    @GetMapping("view")
     public String getCart(){
         return "cart";
     }
