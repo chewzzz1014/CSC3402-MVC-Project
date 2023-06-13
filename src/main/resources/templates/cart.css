@@ -20,6 +20,14 @@ h2 {
     margin-bottom: 10px;
 }
 
+.small {
+    font-family: "Montserrat", sans-serif;
+    text-align: center; /* Add this line */
+    margin-top: 10px; /* Adjust the margin-top value as needed */
+    margin-bottom: 10px;
+    color: #555555;
+    font-size: 14px;
+}
 .header {
     background: white;
     padding: 20px;
