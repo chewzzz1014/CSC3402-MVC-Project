@@ -17,13 +17,13 @@ INSERT INTO products(category_id, price, quantity_in_stock, description, image, 
     VALUES(1, 69, 50, 'Casual and Trendy', 'guy3.png', 'Red Checkered Shirt');
 
 INSERT INTO products(category_id, price, quantity_in_stock, description, image, product_name)
-VALUES(1, 49, 30, 'Fun and Flirty', 'guy5.png', 'Striped Crop Top');
+    VALUES(1, 49, 30, 'Fun and Flirty', 'guy5.png', 'Striped Crop Top');
 
 INSERT INTO products(category_id, price, quantity_in_stock, description, image, product_name)
-VALUES(1, 99, 60, 'Playful and Vibrant', 'guy4.png', 'Yellow Ruffled Dress');
+    VALUES(1, 99, 60, 'Playful and Vibrant', 'guy4.png', 'Yellow Ruffled Dress');
 
 INSERT INTO products(category_id, price, quantity_in_stock, description, image, product_name)
-VALUES(2, 79, 100, 'Chic and Sophisticated', 'girl4.png', 'Printed Midi Skirt');
+    VALUES(2, 79, 100, 'Chic and Sophisticated', 'girl4.png', 'Printed Midi Skirt');
 
 INSERT INTO products(category_id, price, quantity_in_stock, description, image, product_name)
-VALUES(2, 89, 70, 'Quirky and Cute', 'ex2.png', 'Blue Polka Dot Dress');
+    VALUES(2, 89, 70, 'Quirky and Cute', 'ex2.png', 'Blue Polka Dot Dress');
