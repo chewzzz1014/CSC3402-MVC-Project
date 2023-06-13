@@ -2,16 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Clothing Product Page</title>
+    <title>Our Products</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="css/product.css">
+    <link rel="stylesheet" th:href="@{/css/product.css}">
 </head>
 <body>
 <div class="header">
     <div class="container">
         <div class="navbar">
             <div class="logo">
-                <img src="Xiel.png" width="270px">
+                <img th:src="@{/Xiel.png}" width="270px">
             </div>
             <nav>
                 <ul>
@@ -23,10 +23,10 @@
                 </ul>
             </nav>
             <a href="your-link-here" class="logo-link">
-                <img src="LogoCart.png" width="30px" height="30px" class="logo-icon">
+                <img th:src="@{/LogoCart.png}" width="30px" height="30px" class="logo-icon">
             </a>
             <a href="your-link-here" class="logo-link">
-                <img src="LogoUser.png" width="30px" height="30px" class="logo-icon">
+                <img th:src="@{/LogoUser.png}" width="30px" height="30px" class="logo-icon">
             </a>
         </div>
     </div>
@@ -36,117 +36,136 @@
         <h1>BEST SELLING PRODUCTS !!! GRAB NOW</h1>
 
         <div class="product-grid">
-            <div class="product-item">
+
+<!--            <div class="product-item">-->
+<!--                <div class="product-image">-->
+<!--                    <img src="guy1.png" alt="Product Image">-->
+<!--                </div>-->
+<!--                <div class="product-details">-->
+<!--                    <h2>Blue Striped Casual Dress</h2>-->
+<!--                    <h3>Perfect for Summer Days</h3>-->
+<!--                    <div style="display: flex; justify-content: space-between; padding: 0px 70px; margin-bottom: 12px;">-->
+<!--                        <div>Price: RM79.00</div>-->
+<!--                        <div>In Stock: 60</div>-->
+<!--                    </div>-->
+<!--                    <button class="add-to-cart">Add to Cart</button>-->
+<!--                </div>-->
+<!--            </div>-->
+
+
+            <div th:each="product : ${products}" class="product-item">
                 <div class="product-image">
-                    <img src="guy1.png" alt="Product Image">
+                    <img th:src="@{${'/' + product.image}}" alt="Product Image">
                 </div>
                 <div class="product-details">
-                    <h2>Blue Striped Casual Dress</h2>
-                    <h3>Perfect for Summer Days</h3>
+                    <h2 th:text="${product.productname}"></h2>
+                    <h3 th:text="${product.description}"></h3>
                     <div style="display: flex; justify-content: space-between; padding: 0px 70px; margin-bottom: 12px;">
-                        <div>Price: RM79.00</div>
-                        <div>In Stock: 60</div>
+                        <div>Price: RM<span th:text="${product.price}"></span></div>
+                        <div>In Stock: <span th:text="${product.stockquantity}"></span></div>
                     </div>
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
             </div>
-            <div class="product-item">
-                <div class="product-image">
-                    <img src="girl2.png" alt="Product Image">
-                </div>
-                <div class="product-details">
-                    <h2>Pink Floral Maxi Dress</h2>
-                    <h3>Elegant and Flowy</h3>
-                    <div style="display: flex; justify-content: space-between; padding: 0px 70px; margin-bottom: 12px;">
-                        <div>Price: RM79.00</div>
-                        <div>In Stock: 50</div>
-                    </div>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="product-image">
-                    <img src="girl3.png" alt="Product Image">
-                </div>
-                <div class="product-details">
-                    <h2>White Lace Blouse</h2>
-                    <p>Classic and Chic</p>
-                    <p>Price: RM89.00</p>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            </div>
 
-            <!-- New row of products -->
 
-            <div class="product-item">
-                <div class="product-image">
-                    <img src="guy2.png" alt="Product Image">
-                </div>
-                <div class="product-details">
-                    <h2>Black Denim Jeans</h2>
-                    <p>Stylish and Versatile</p>
-                    <p>Price: RM109.00</p>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="product-image">
-                    <img src="guy3.png" alt="Product Image">
-                </div>
-                <div class="product-details">
-                    <h2>Red Checkered Shirt</h2>
-                    <p>Casual and Trendy</p>
-                    <p>Price: RM69.00</p>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="product-image">
-                    <img src="guy5.png" alt="Product Image">
-                </div>
-                <div class="product-details">
-                    <h2>Striped Crop Top</h2>
-                    <p>Fun and Flirty</p>
-                    <p>Price: RM49.00</p>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            </div>
+<!--            <div class="product-item">-->
+<!--                <div class="product-image">-->
+<!--                    <img src="girl2.png" alt="Product Image">-->
+<!--                </div>-->
+<!--                <div class="product-details">-->
+<!--                    <h2>Pink Floral Maxi Dress</h2>-->
+<!--                    <h3>Elegant and Flowy</h3>-->
+<!--                    <div style="display: flex; justify-content: space-between; padding: 0px 70px; margin-bottom: 12px;">-->
+<!--                        <div>Price: RM79.00</div>-->
+<!--                        <div>In Stock: 50</div>-->
+<!--                    </div>-->
+<!--                    <button class="add-to-cart">Add to Cart</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="product-item">-->
+<!--                <div class="product-image">-->
+<!--                    <img src="girl3.png" alt="Product Image">-->
+<!--                </div>-->
+<!--                <div class="product-details">-->
+<!--                    <h2>White Lace Blouse</h2>-->
+<!--                    <p>Classic and Chic</p>-->
+<!--                    <p>Price: RM89.00</p>-->
+<!--                    <button class="add-to-cart">Add to Cart</button>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <!-- New row of products -->
+<!--            &lt;!&ndash; New row of products &ndash;&gt;-->
 
-            <div class="product-item">
-                <div class="product-image">
-                    <img src="guy4.png" alt="Product Image">
-                </div>
-                <div class="product-details">
-                    <h2>Yellow Ruffled Dress</h2>
-                    <p>Playful and Vibrant</p>
-                    <p>Price: RM99.00</p>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="product-image">
-                    <img src="girl4.png" alt="Product Image">
-                </div>
-                <div class="product-details">
-                    <h2>Printed Midi Skirt</h2>
-                    <p>Chic and Sophisticated</p>
-                    <p>Price: RM79.00</p>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="product-image">
-                    <img src="ex2.png" alt="Product Image">
-                </div>
-                <div class="product-details">
-                    <h2>Blue Polka Dot Dress</h2>
-                    <p>Quirky and Cute</p>
-                    <p>Price: RM89.00</p>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            </div>
+<!--            <div class="product-item">-->
+<!--                <div class="product-image">-->
+<!--                    <img src="guy2.png" alt="Product Image">-->
+<!--                </div>-->
+<!--                <div class="product-details">-->
+<!--                    <h2>Black Denim Jeans</h2>-->
+<!--                    <p>Stylish and Versatile</p>-->
+<!--                    <p>Price: RM109.00</p>-->
+<!--                    <button class="add-to-cart">Add to Cart</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="product-item">-->
+<!--                <div class="product-image">-->
+<!--                    <img src="guy3.png" alt="Product Image">-->
+<!--                </div>-->
+<!--                <div class="product-details">-->
+<!--                    <h2>Red Checkered Shirt</h2>-->
+<!--                    <p>Casual and Trendy</p>-->
+<!--                    <p>Price: RM69.00</p>-->
+<!--                    <button class="add-to-cart">Add to Cart</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="product-item">-->
+<!--                <div class="product-image">-->
+<!--                    <img src="guy5.png" alt="Product Image">-->
+<!--                </div>-->
+<!--                <div class="product-details">-->
+<!--                    <h2>Striped Crop Top</h2>-->
+<!--                    <p>Fun and Flirty</p>-->
+<!--                    <p>Price: RM49.00</p>-->
+<!--                    <button class="add-to-cart">Add to Cart</button>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; New row of products &ndash;&gt;-->
+
+<!--            <div class="product-item">-->
+<!--                <div class="product-image">-->
+<!--                    <img src="guy4.png" alt="Product Image">-->
+<!--                </div>-->
+<!--                <div class="product-details">-->
+<!--                    <h2>Yellow Ruffled Dress</h2>-->
+<!--                    <p>Playful and Vibrant</p>-->
+<!--                    <p>Price: RM99.00</p>-->
+<!--                    <button class="add-to-cart">Add to Cart</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="product-item">-->
+<!--                <div class="product-image">-->
+<!--                    <img src="girl4.png" alt="Product Image">-->
+<!--                </div>-->
+<!--                <div class="product-details">-->
+<!--                    <h2>Printed Midi Skirt</h2>-->
+<!--                    <p>Chic and Sophisticated</p>-->
+<!--                    <p>Price: RM79.00</p>-->
+<!--                    <button class="add-to-cart">Add to Cart</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="product-item">-->
+<!--                <div class="product-image">-->
+<!--                    <img src="ex2.png" alt="Product Image">-->
+<!--                </div>-->
+<!--                <div class="product-details">-->
+<!--                    <h2>Blue Polka Dot Dress</h2>-->
+<!--                    <p>Quirky and Cute</p>-->
+<!--                    <p>Price: RM89.00</p>-->
+<!--                    <button class="add-to-cart">Add to Cart</button>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
 
     </main>

@@ -15,9 +15,9 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
-    @GetMapping("list")
-    public String showUpdateForm(Model model) {
-        model.addAttribute("staffs", productRepository.findAll());
+    @GetMapping("all")
+    public String showAllProducts(Model model) {
+        model.addAttribute("products", productRepository.findAll());
         return "product";
     }
 }
