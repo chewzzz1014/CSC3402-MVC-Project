@@ -35,8 +35,7 @@ public class Product {
     @ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)
     private Set<Order> orders = new HashSet<>();
 
-    public Product() {
-    }
+
 
     public Integer getProductId() {
         return productId;
@@ -102,6 +101,19 @@ public class Product {
         this.orders = orders;
     }
 
+    public Product() {
+        super();
+    }
+
+    public Product(String productname, String description, Double price, Integer stockquantity, String image, Category category) {
+        this.productname = productname;
+        this.description = description;
+        this.price = price;
+        this.stockquantity = stockquantity;
+        this.image = image;
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -111,6 +123,7 @@ public class Product {
                 ", price=" + price +
                 ", stockquantity=" + stockquantity +
                 ", image='" + image + '\'' +
+                ", category=" + category +
                 '}';
     }
 }

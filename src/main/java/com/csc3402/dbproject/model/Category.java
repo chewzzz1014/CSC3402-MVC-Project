@@ -17,15 +17,6 @@ public class Category {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private Set<Product> products;
 
-    public Category() {
-        super();
-    }
-
-    public Category(String categoryname){
-        super();
-        this.categoryname = categoryname;
-    }
-
     public Integer getCategoryId() {
         return categoryId;
     }
@@ -48,6 +39,15 @@ public class Category {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    public Category() {
+        super();
+    }
+
+    public Category(String categoryname){
+        super();
+        this.categoryname = categoryname;
     }
 
     @Override

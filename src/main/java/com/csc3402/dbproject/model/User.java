@@ -14,12 +14,6 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "address")
-    private String address;
-
-    @Column(name = "phone_num")
-    private String phonenum;
-
     @Column(name = "e_mail")
     private String email;
 
@@ -30,11 +24,9 @@ public class User {
         super();
     }
 
-    public User(String name, String address, String phonenum, String email){
+    public User(String name, String email){
         super();
         this.name = name;
-        this.address = address;
-        this.phonenum = phonenum;
         this.email = email;
     }
 
@@ -52,22 +44,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhonenum() {
-        return phonenum;
-    }
-
-    public void setPhonenum(String phonenum) {
-        this.phonenum = phonenum;
     }
 
     public String getEmail() {
@@ -91,8 +67,6 @@ public class User {
         return "User{" +
                 "userId=" + userId +
                 ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", phonenum='" + phonenum + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

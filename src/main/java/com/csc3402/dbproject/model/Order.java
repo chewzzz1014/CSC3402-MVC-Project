@@ -23,6 +23,12 @@ public class Order implements Serializable {
     @Column(name = "payment_method")
     private Integer paymentmethod;
 
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "phone_num")
+    private String phonenum;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -62,6 +68,22 @@ public class Order implements Serializable {
         this.date = date;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhonenum() {
+        return phonenum;
+    }
+
+    public void setPhonenum(String phonenum) {
+        this.phonenum = phonenum;
+    }
+
     public Integer getPaymentmethod() {
         return paymentmethod;
     }
@@ -87,12 +109,16 @@ public class Order implements Serializable {
     }
 
     public Order() {
+        super();
     }
 
-    public Order(String totalprice, String date, Integer paymentmethod, User user) {
+    public Order(String totalprice, String date, Integer paymentmethod, String address, String phonenum, User user) {
+        super();
         this.totalprice = totalprice;
         this.date = date;
         this.paymentmethod = paymentmethod;
+        this.address = address;
+        this.phonenum = phonenum;
         this.user = user;
     }
 
@@ -103,6 +129,9 @@ public class Order implements Serializable {
                 ", totalprice='" + totalprice + '\'' +
                 ", date='" + date + '\'' +
                 ", paymentmethod=" + paymentmethod +
+                ", address='" + address + '\'' +
+                ", phonenum='" + phonenum + '\'' +
+                ", user=" + user +
                 '}';
     }
 }
