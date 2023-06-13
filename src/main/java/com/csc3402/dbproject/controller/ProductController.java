@@ -21,6 +21,7 @@ public class ProductController {
     @GetMapping("all")
     public String showAllProducts(Model model) {
         model.addAttribute("products", productRepository.findAll());
+        model.addAttribute("category", "all");
         return "product";
     }
 
@@ -29,6 +30,7 @@ public class ProductController {
     public String showAllMenProducts(Model model) {
         List<Product> products = (List<Product>) productRepository.filterProductByCategory(1);
         model.addAttribute("products", products);
+        model.addAttribute("category", "men");
         return "product";
     }
 
@@ -36,6 +38,7 @@ public class ProductController {
     @GetMapping("women")
     public String showAllWomenProducts(Model model) {
         List<Product> products = (List<Product>) productRepository.filterProductByCategory(2);
+        model.addAttribute("category", "women");
         model.addAttribute("products", products);
         return "product";
     }
