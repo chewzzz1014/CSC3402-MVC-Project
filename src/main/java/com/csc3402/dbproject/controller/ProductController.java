@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/products")
 public class ProductController {
@@ -15,9 +17,26 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
+    // return all products
     @GetMapping("all")
     public String showAllProducts(Model model) {
         model.addAttribute("products", productRepository.findAll());
+        return "product";
+    }
+
+    // return products of men category
+    @GetMapping("men")
+    public String showAllMenProducts(Model model) {
+        List<Product> products = (List<Product>) productRepository.filterProductByCategory(1);
+        model.addAttribute("products", products);
+        return "product";
+    }
+
+    // return products of women category
+    @GetMapping("women")
+    public String showAllWomenProducts(Model model) {
+        List<Product> products = (List<Product>) productRepository.filterProductByCategory(2);
+        model.addAttribute("products", products);
         return "product";
     }
 }
