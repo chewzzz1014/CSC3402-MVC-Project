@@ -9,38 +9,24 @@
   <link rel="stylesheet" href="cart.css">
 </head>
 <body>
-<div class="header">
-  <div class="container">
-    <div class="navbar">
-      <div class="logo">
-        <img th:src="@{/Xiel.png}" width="270px">
-      </div>
-      <nav>
-        <ul>
-          <li><a href="">Home</a></li>
-          <li><a href="/products/all">All Products</a></li>
-          <li><a href="/products/men">Men</a></li>
-          <li><a href="/products/women">Women</a></li>
-        </ul>
-      </nav>
-      <a href="your-link-here" class="logo-link">
-        <img th:src="@{/LogoCart.png}" width="30px" height="30px" class="logo-icon">
-      </a>
-      <a href="your-link-here" class="logo-link">
-        <img th:src="@{/LogoUser.png}" width="30px" height="30px" class="logo-icon">
-      </a>
-    </div>
+<div class="navbar">
+  <div class="logo">
+    <a href="/"><img th:src="@{/Xiel.png}" width="270px"></a>
   </div>
-  <div class="row">
-    <div class="col-2">
-      <h1>40% OFF NOW ! <br> SUMMER BREAK HAS ARRIVED </h1>
-      <p>Shop for the best outfit <br> choose your own colour , be true, be you </p>
-      <a href="" class="btn"> Explore Now</a>
-    </div>
-    <div class="col-2">
-      <img th:src="@{/bck1.png}">
-    </div>
-  </div>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/products/all">All Products</a></li>
+      <li><a href="/products/men">Men</a></li>
+      <li><a href="/products/women">Women</a></li>
+    </ul>
+  </nav>
+  <a href="your-link-here" class="logo-link">
+    <img th:src="@{/LogoCart.png}" width="30px" height="30px" class="logo-icon">
+  </a>
+  <a href="your-link-here" class="logo-link">
+    <img th:src="@{/LogoUser.png}" width="30px" height="30px" class="logo-icon">
+  </a>
 </div>
 
 <h2>Purchase Confirmed!</h2>
