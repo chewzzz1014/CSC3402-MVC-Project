@@ -33,17 +33,6 @@ public class Order implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
-    @JoinTable(name = "orders_products",
-            joinColumns = {
-                    @JoinColumn(name = "order_id", referencedColumnName = "order_id",
-                            nullable = false, updatable = false)},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "product_id", referencedColumnName = "product_id",
-                            nullable = false, updatable = false)})
-
-    private Set<Product> products = new HashSet<>();
-
     public Integer getOrderId() {
         return orderId;
     }
@@ -98,14 +87,6 @@ public class Order implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Set<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products;
     }
 
     public Order() {
