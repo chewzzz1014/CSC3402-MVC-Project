@@ -45,9 +45,9 @@
                 <h3>Product 1</h3>
                 <p class="price">RM99.99</p>
                 <div class="quantity">
-                    <button class="quantity-btn decrease">-</button>
+                    <button class="quantity-btn decrease" th:onclick="'decreaseQuantity()'">-</button>
                     <input type="number" class="quantity-input" value="1" min="1">
-                    <button class="quantity-btn increase">+</button>
+                    <button class="quantity-btn increase"  th:onclick="'increaseQuantity()'">+</button>
                 </div>
                 <button class="remove-btn">Remove</button>
             </div>
@@ -59,9 +59,9 @@
                 <h3>Product 2</h3>
                 <p class="price">RM199.99</p>
                 <div class="quantity">
-                    <button class="quantity-btn decrease">-</button>
+                    <button class="quantity-btn decrease"  th:onclick="'decreaseQuantity()'">-</button>
                     <input type="number" class="quantity-input" value="1" min="1">
-                    <button class="quantity-btn increase">+</button>
+                    <button class="quantity-btn increase"  th:onclick="'increaseQuantity()'">+</button>
                 </div>
                 <button class="remove-btn">Remove</button>
             </div>
@@ -75,26 +75,24 @@
 </section>
 
 <script>
-    const decreaseButtons = document.querySelectorAll('.quantity-btn.decrease');
-    const increaseButtons = document.querySelectorAll('.quantity-btn.increase');
-
-    decreaseButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const input = button.nextElementSibling;
-            const value = parseInt(input.value);
-            if (value > 1) {
-                input.value = value - 1;
-            }
-        });
-    });
-
-    increaseButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const input = button.previousElementSibling;
-            const value = parseInt(input.value);
+    function increaseQuantity() {
+        const increaseButtons = document.querySelectorAll('.quantity-btn.increase');
+        const input = increaseButtons.nextElementSibling;
+        const value = parseInt(input.value);
+        if (value <= 5) {
             input.value = value + 1;
-        });
-    });
+        }
+    }
+
+    function decreaseQuantity() {
+        console.log('hihihhi')
+        const decreaseButtons = document.querySelectorAll('.quantity-btn.decrease');
+        const input = decreaseButtons.previousElementSibling;
+        const value = parseInt(input.value);
+        if (value > 1) {
+            input.value = value - 1;
+        }
+    }
 </script>
 
 
