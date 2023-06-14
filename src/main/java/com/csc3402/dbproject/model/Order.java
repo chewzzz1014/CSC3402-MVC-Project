@@ -2,6 +2,7 @@ package com.csc3402.dbproject.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Date;
 
 
 @Entity
@@ -16,8 +17,9 @@ public class Order implements Serializable {
     @Column(name = "total_price", columnDefinition = "integer default 0")
     private Integer totalprice;
 
-    @Column(name = "date_of_order")
-    private String date;
+    @Column(name = "last_updated", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date last_updated;
 
     @Column(name = "payment_method", columnDefinition = "varchar(250) default ''")
     private Integer paymentmethod;
@@ -46,12 +48,12 @@ public class Order implements Serializable {
         this.totalprice = totalprice;
     }
 
-    public String getDate() {
-        return date;
+    public Date getDate() {
+        return last_updated;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDate(Date date) {
+        this.last_updated = date;
     }
 
     public String getAddress() {
@@ -90,10 +92,10 @@ public class Order implements Serializable {
         super();
     }
 
-    public Order(Integer totalprice, String date, Integer paymentmethod, String address, String phonenum, Customer customer) {
+    public Order(Integer totalprice, Date date, Integer paymentmethod, String address, String phonenum, Customer customer) {
         super();
         this.totalprice = totalprice;
-        this.date = date;
+        this.last_updated = date;
         this.paymentmethod = paymentmethod;
         this.address = address;
         this.phonenum = phonenum;
@@ -105,7 +107,7 @@ public class Order implements Serializable {
         return "Order{" +
                 "orderId=" + orderId +
                 ", totalprice='" + totalprice + '\'' +
-                ", date='" + date + '\'' +
+                ", date='" + last_updated + '\'' +
                 ", paymentmethod=" + paymentmethod +
                 ", address='" + address + '\'' +
                 ", phonenum='" + phonenum + '\'' +

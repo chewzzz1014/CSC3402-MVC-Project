@@ -28,4 +28,9 @@ INSERT INTO products(category_id, price, quantity_in_stock, description, image, 
 INSERT INTO products(category_id, price, quantity_in_stock, description, image, product_name)
     VALUES(2, 89, 70, 'Quirky and Cute', 'ex2.png', 'Blue Polka Dot Dress');
 
-INSERT INTO customer(name,e_mail) VALUES('kaijie', '212858@stuednt.upm.edu.my')
+INSERT INTO customer(name,e_mail) VALUES('kaijie', '212858@stuednt.upm.edu.my');
+
+INSERT INTO orders(customer_id) VALUES (1);
+INSERT INTO order_product(order_id, product_id, quantity) VALUES (1, 2, 10);
+INSERT INTO order_product(order_id, product_id, quantity) VALUES (1, 3, 10);
+INSERT INTO order_product(order_id, product_id, quantity) VALUES (1, 4, 10);

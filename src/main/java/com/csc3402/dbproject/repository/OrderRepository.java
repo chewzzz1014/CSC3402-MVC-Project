@@ -12,5 +12,4 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     @Query(value = "SELECT * FROM order where order_id = :id", nativeQuery = true)
     Category findOrderById(@Param("id") int id);
-
 }
