@@ -30,29 +30,15 @@
 <h2>SHOPPING CART</h2>
 
 <section>
-    <div class="cart">
+    <div th:each="product : ${cart_products}" class="cart">
         <div class="cart-item">
-            <img th:src="@{/girl2.png}" alt="Product 1">
+            <img th:src="@{${'/' + product.getProduct().getImage()}}" alt="Product 1">
             <div class="cart-item-details">
-                <h3>Product 1</h3>
-                <p class="price">RM99.99</p>
+                <h3 th:text="${product.getProduct().getProductname()}"></h3>
+                <p class="price">RM<span th:text="${product.getProduct().getPrice()}"></span></p>
                 <div class="quantity">
                     <button class="quantity-btn decrease">-</button>
-                    <input type="number" class="quantity-input" value="1" min="1">
-                    <button class="quantity-btn increase">+</button>
-                </div>
-                <button class="remove-btn">Remove</button>
-            </div>
-        </div>
-
-        <div class="cart-item">
-            <img th:src="@{/girl3.png}" alt="Product 2">
-            <div class="cart-item-details">
-                <h3>Product 2</h3>
-                <p class="price">RM199.99</p>
-                <div class="quantity">
-                    <button class="quantity-btn decrease">-</button>
-                    <input type="number" class="quantity-input" value="1" min="1">
+                    <input type="number" class="quantity-input" th:value="${product.getQuantity() > 0} ? ${product.getQuantity()} : '1'">
                     <button class="quantity-btn increase">+</button>
                 </div>
                 <button class="remove-btn">Remove</button>

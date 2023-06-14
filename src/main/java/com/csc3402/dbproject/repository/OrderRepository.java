@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-    @Query(value = "SELECT * FROM order where order_id = :id", nativeQuery = true)
+    @Query(value = "SELECT * FROM orders where order_id = :id", nativeQuery = true)
     Category findOrderById(@Param("id") int id);
+
+    @Query(value = "SELECT order_id FROM orders WHERE customer_id = :customer_id ORDER BY last_updated DESC LIMIT 1", nativeQuery = true)
+    Long getCustomerLatestOrderId(@Param("customer_id") int customer_id);
 }
