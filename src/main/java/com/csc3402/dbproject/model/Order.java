@@ -2,8 +2,7 @@ package com.csc3402.dbproject.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Entity
 @Table(name = "orders")
@@ -30,8 +29,8 @@ public class Order implements Serializable {
     private String phonenum;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     public Integer getOrderId() {
         return orderId;
@@ -81,26 +80,26 @@ public class Order implements Serializable {
         this.paymentmethod = paymentmethod;
     }
 
-    public User getUser() {
-        return user;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Order() {
         super();
     }
 
-    public Order(String totalprice, String date, Integer paymentmethod, String address, String phonenum, User user) {
+    public Order(String totalprice, String date, Integer paymentmethod, String address, String phonenum, Customer customer) {
         super();
         this.totalprice = totalprice;
         this.date = date;
         this.paymentmethod = paymentmethod;
         this.address = address;
         this.phonenum = phonenum;
-        this.user = user;
+        this.customer = customer;
     }
 
     @Override
@@ -112,7 +111,7 @@ public class Order implements Serializable {
                 ", paymentmethod=" + paymentmethod +
                 ", address='" + address + '\'' +
                 ", phonenum='" + phonenum + '\'' +
-                ", user=" + user +
+                ", customer=" + customer +
                 '}';
     }
 }

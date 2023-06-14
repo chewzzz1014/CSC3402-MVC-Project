@@ -21,6 +21,9 @@ public class OrderProduct {
     @Column(name = "quantity")
     private String quantity;
 
+    @Column(name = "has_check_out")
+    private Integer hascheckout;
+
     public OrderProductId getId() {
         return id;
     }
@@ -53,15 +56,34 @@ public class OrderProduct {
         this.quantity = quantity;
     }
 
-    public OrderProduct() {
+    public Integer getHascheckout() {
+        return hascheckout;
     }
 
-    public OrderProduct(Order order, Product product, String quantity){
+    public void setHascheckout(Integer hascheckout) {
+        this.hascheckout = hascheckout;
+    }
+
+    public OrderProduct() {
+        this.hascheckout = 0;
+    }
+
+    public OrderProduct(Order order, Product product, String quantity, Integer hascheckout){
         this.id = new OrderProductId(order.getOrderId(), product.getProductId());
         this.order = order;
         this.product = product;
         this.quantity = quantity;
+        this.hascheckout = hascheckout;
     }
 
-
+    @Override
+    public String toString() {
+        return "OrderProduct{" +
+                "id=" + id +
+                ", order=" + order +
+                ", product=" + product +
+                ", quantity='" + quantity + '\'' +
+                ", hascheckout=" + hascheckout +
+                '}';
+    }
 }

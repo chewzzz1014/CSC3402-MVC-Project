@@ -5,11 +5,11 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-public class User {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Integer userId;
+    @Column(name = "customer_id")
+    private Integer customerId;
 
     @Column(name = "name")
     private String name;
@@ -17,25 +17,25 @@ public class User {
     @Column(name = "e_mail")
     private String email;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Order> orders;
 
-    public User() {
+    public Customer() {
         super();
     }
 
-    public User(String name, String email){
+    public Customer(String name, String email){
         super();
         this.name = name;
         this.email = email;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
     public String getName() {
@@ -64,8 +64,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "userId=" + userId +
+        return "Customer{" +
+                "customerId=" + customerId +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 '}';
