@@ -13,19 +13,19 @@ public class Order implements Serializable {
     @Column(name = "order_id")
     private Integer orderId;
 
-    @Column(name = "total_price")
-    private String totalprice;
+    @Column(name = "total_price", columnDefinition = "integer default 0")
+    private Integer totalprice;
 
     @Column(name = "date_of_order")
     private String date;
 
-    @Column(name = "payment_method")
+    @Column(name = "payment_method", columnDefinition = "varchar(250) default ''")
     private Integer paymentmethod;
 
-    @Column(name = "address")
+    @Column(name = "address", columnDefinition = "varchar(250) default ''")
     private String address;
 
-    @Column(name = "phone_num")
+    @Column(name = "phone_num", columnDefinition = "varchar(250) default ''")
     private String phonenum;
 
     @ManyToOne
@@ -40,11 +40,9 @@ public class Order implements Serializable {
         this.orderId = orderId;
     }
 
-    public String getTotalprice() {
-        return totalprice;
-    }
+    public Integer getTotalprice() { return totalprice; }
 
-    public void setTotalprice(String totalprice) {
+    public void setTotalprice(Integer totalprice) {
         this.totalprice = totalprice;
     }
 
@@ -92,7 +90,7 @@ public class Order implements Serializable {
         super();
     }
 
-    public Order(String totalprice, String date, Integer paymentmethod, String address, String phonenum, Customer customer) {
+    public Order(Integer totalprice, String date, Integer paymentmethod, String address, String phonenum, Customer customer) {
         super();
         this.totalprice = totalprice;
         this.date = date;

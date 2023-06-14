@@ -18,10 +18,10 @@ public class OrderProduct {
     @JoinColumn(name = "product_Id")
     private Product product;
 
-    @Column(name = "quantity")
-    private String quantity;
+    @Column(name = "quantity", columnDefinition = "integer default 0")
+    private Integer quantity;
 
-    @Column(name = "has_check_out")
+    @Column(name = "has_check_out", columnDefinition = "integer default 0")
     private Integer hascheckout;
 
     public OrderProductId getId() {
@@ -48,11 +48,11 @@ public class OrderProduct {
         this.product = product;
     }
 
-    public String getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -68,7 +68,7 @@ public class OrderProduct {
         this.hascheckout = 0;
     }
 
-    public OrderProduct(Order order, Product product, String quantity, Integer hascheckout){
+    public OrderProduct(Order order, Product product, Integer quantity, Integer hascheckout){
         this.id = new OrderProductId(order.getOrderId(), product.getProductId());
         this.order = order;
         this.product = product;
