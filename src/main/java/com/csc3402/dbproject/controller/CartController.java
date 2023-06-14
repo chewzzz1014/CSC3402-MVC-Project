@@ -36,10 +36,10 @@ public class CartController {
         List<OrderProduct> products_in_cart = orderProductRepository.getProductsInCart((int) order_id);
 
         model.addAttribute("cart_products", products_in_cart);
-        System.out.println(products_in_cart.get(0).getProduct());
-        System.out.println(products_in_cart.get(0).getOrder());
-        System.out.println(products_in_cart.get(0).getQuantity());
-        System.out.println(products_in_cart.get(0).getProduct().getProductname());
+//        System.out.println(products_in_cart.get(0).getProduct());
+//        System.out.println(products_in_cart.get(0).getOrder());
+//        System.out.println(products_in_cart.get(0).getQuantity());
+//        System.out.println(products_in_cart.get(0).getProduct().getProductname());
         return "cart";
     }
 
