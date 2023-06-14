@@ -6,7 +6,7 @@
 <head>
   <title>Order Page</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <link rel="stylesheet" th:href="@{/css/cart.css}">
+  <link rel="stylesheet" href="/static/css/cart.css">
 </head>
 <body>
 <div class="navbar">
@@ -37,35 +37,84 @@
     <div class="cart-item">
       <img src="./templates/girl2.png" alt="Product 1">
       <div class="cart-item-details">
-        <h3>Product 1</h3>
-        <p class="price">RM99.99</p>
-        <div class="quantity">
-          <button class="quantity-btn decrease">-</button>
-          <input type="number" class="quantity-input" value="1" min="1">
-          <button class="quantity-btn increase">+</button>
+        <div class="flex-item">
+          <h3>Product 1</h3>
+          <p class="price">RM99.99</p>
         </div>
-        <button class="remove-btn">Remove</button>
+
+        <div class="flex-item">
+          <div class="quantity">
+            <p>Quantity bought: </p>
+          </div>
+        </div>
+
+        <div class="flex-item">
+          <div class="sub-total">
+            <p>Total: </p>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="cart-item">
       <img src="./templates/girl3.png" alt="Product 2">
       <div class="cart-item-details">
-        <h3>Product 2</h3>
-        <p class="price">RM199.99</p>
-        <div class="quantity">
-          <button class="quantity-btn decrease">-</button>
-          <input type="number" class="quantity-input" value="1" min="1">
-          <button class="quantity-btn increase">+</button>
+        <div class="flex-item">
+          <h3>Product 2</h3>
+          <p class="price">RM199.99</p>
         </div>
-        <button class="remove-btn">Remove</button>
+
+        <div class="flex-item">
+          <div class="quantity">
+            <p>Quantity bought: </p>
+          </div>
+        </div>
+
+        <div class="flex-item sub-total">
+            <p>Total: </p>
+        </div>
       </div>
     </div>
   </div>
 
+  <div class="shipping-details">
+    <div class="user-details">
+      <div class="user-item">
+        <h4>Username</h4>
+        <p>username placeholder</p>
+      </div>
+      <div class="user-item">
+        <h4>Email</h4>
+        <p>email placeholder</p>
+      </div>
+      <div class="user-item">
+        <h4>Phone no.</h4>
+        <p>phone placeholder</p>
+      </div>
+      <div class="user-item">
+        <h4>Payment method</h4>
+        <p>payment placeholder</p>
+      </div>
+
+<!--      this is used for padding purpose-->
+      <div></div>
+    </div>
+    <h3>
+      Shipping to:
+    </h3>
+    <p>
+      Jaln UPM, 12345, Selangor
+    </p>
+  </div>
+
   <div class="cart-footer">
     <p class="total">Total Price: <span class="total-price">RM298.98</span></p>
-    <button class="checkout-btn">Checkout</button>
+  </div>
+
+  <div style="display: grid;">
+    <button class="checkout-btn" style="margin: auto; font-size: 16px;">
+      Continue browsing
+    </button>
   </div>
 </section>
 

@@ -24,7 +24,6 @@ h2 {
     font-family: "Montserrat", sans-serif;
     text-align: center; /* Add this line */
     margin-top: 10px; /* Adjust the margin-top value as needed */
-    margin-bottom: 10px;
     color: #555555;
     font-size: 14px;
 }
@@ -86,6 +85,27 @@ section {
     padding: 20px;
 }
 
+.shipping-details {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 4px;
+    margin: 20px;
+}
+
+.shipping-details p {
+    color: #555555;
+}
+
+.user-item h3, h4 {
+    margin-bottom: 0;
+    margin-top: 5px;
+}
+
+.user-details {
+    display: flex;
+    justify-content: space-between;
+}
+
 .cart {
     background-color: #f5f5f5;
     border-radius: 4px;
@@ -107,12 +127,19 @@ section {
 
 .cart-item-details {
     flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .cart-item-details h3 {
     margin: 0;
     font-size: 18px;
     margin-bottom: 5px;
+}
+
+.flex-item {
+    margin: 2rem;
 }
 
 .price {
@@ -124,10 +151,10 @@ section {
 .quantity {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    font-size: 14px;
 }
 
-.quantity-btn {
+.btn {
     background-color: #f5f5f5;
     color: #333;
     border: none;
@@ -135,7 +162,7 @@ section {
     cursor: pointer;
 }
 
-.quantity-btn:hover {
+.btn:hover {
     background-color: #e0e0e0;
 }
 
@@ -216,6 +243,7 @@ section {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    width: 75%;
 }
 
 .cart-item img {
@@ -226,13 +254,27 @@ section {
 }
 
 .cart-item-details {
-    flex: 1;
+    display: flex;
+    width: 100%;
 }
 
 .cart-item-details h3 {
     margin: 0;
     font-size: 18px;
     margin-bottom: 5px;
+}
+
+.flex-item:last-child {
+    align-self: flex-end;
+}
+
+.sub-total {
+    align-self: flex-end;
+    align-items: center;
+}
+
+.sub-total p {
+    font-weight: bold;
 }
 
 .price {
@@ -244,10 +286,9 @@ section {
 .quantity {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
 }
 
-.quantity-btn {
+.btn {
     background-color: transparent;
     color: #C8B796 ;
     border: none;
@@ -256,15 +297,15 @@ section {
     font-size: 16px;
 }
 
-.quantity-btn:hover {
+.btn:hover {
     color: #563434 ;
 }
 
-.quantity-btn.decrease {
+.btn.decrease {
     margin-right: 10px;
 }
 
-.quantity-btn.increase {
+.btn.increase {
     margin-left: 10px;
 }
 
