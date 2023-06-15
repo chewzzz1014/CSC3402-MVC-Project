@@ -46,16 +46,16 @@
 
                     <div style="width: 250px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
                         <div class="quantity">
-                            <button class="quantity-btn decrease">-</button>
-
                             <input type="hidden" th:field="*{cartList[__${iterStat.index}__].order}" />
                             <input type="hidden" th:field="*{cartList[__${iterStat.index}__].product}" />
+
+                            <div class="quantity-btn decrease"><span>-</span></div>
                             <input
                                     type="number"
                                     th:field="*{cartList[__${iterStat.index}__].quantity}"
                                     class="quantity-input"
                             >
-                            <button class="quantity-btn increase">+</button>
+                            <div class="quantity-btn increase"><span>+</span></div>
                         </div>
                         <div style="display: flex; justify-content: center; gap: 10px;">
                             <div class="remove-btn">
@@ -86,11 +86,12 @@
                     class="checkout-btn"
                     style="margin-right: 10px;"
             >
-                Continue Shopping
+                <a style="text-decoration: none; color: #fff;" th:href="@{/products/all}">Continue Shopping</a>
             </button>
             <button
-                    class="checkout-btn">
-                Checkout
+                    class="checkout-btn"
+            >
+                <a style="text-decoration: none; color: #fff;" th:href="@{/checkout/edit (order_id=${order_id})}">Checkout</a>
             </button>
         </div>
 

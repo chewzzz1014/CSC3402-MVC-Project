@@ -301,12 +301,18 @@ section {
     color: #563434 ;
 }
 
-.btn.decrease {
-    margin-right: 10px;
-}
-
-.btn.increase {
-    margin-left: 10px;
+.quantity-btn.decrease,
+.quantity-btn.increase {
+    font-size: 30px;
+    color: #fff;
+    background-color: #C8B796;
+    width: 30px;
+    height: 25px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 
 .quantity-input {
