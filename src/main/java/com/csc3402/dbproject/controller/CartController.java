@@ -2,10 +2,12 @@ package com.csc3402.dbproject.controller;
 
 import com.csc3402.dbproject.model.CartForm;
 import com.csc3402.dbproject.model.OrderProduct;
+import com.csc3402.dbproject.model.Order;
 import com.csc3402.dbproject.model.OrderProductId;
 import com.csc3402.dbproject.model.Product;
 import com.csc3402.dbproject.repository.OrderProductRepository;
 import com.csc3402.dbproject.repository.OrderRepository;
+import com.csc3402.dbproject.repository.ProductRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Controller;
@@ -25,10 +27,13 @@ public class CartController {
 
     private final OrderRepository orderRepository;
     private final OrderProductRepository orderProductRepository;
+    private final ProductRepository productRepository;
+    private Integer customer_id = 1;
 
-    CartController(OrderRepository orderRepository, OrderProductRepository orderProductRepository) {
+    CartController(OrderRepository orderRepository, OrderProductRepository orderProductRepository, ProductRepository productRepository) {
         this.orderRepository = orderRepository;
         this.orderProductRepository = orderProductRepository;
+        this.productRepository = productRepository;
     }
 
     @GetMapping("display/{customer_id}")
@@ -40,7 +45,13 @@ public class CartController {
         List<OrderProduct> products_in_cart = orderProductRepository.getProductsInCart((int) order_id);
         CartForm cartForm = new CartForm(products_in_cart);
 
-        model.addAttribute("order_id", (int) order_id);
+        float total_price = 0;
+        for(int i = 0; i<products_in_cart.size(); i++) {
+            total_price += products_in_cart.get(i).getProduct().getPrice() * products_in_cart.get(i).getQuantity();
+        }
+
+        model.addAttribute("totalPrice", total_price);
+        model.addAttribute("order_id", order_id);
         model.addAttribute("cartForm", cartForm);
 
 //        System.out.println(products_in_cart.get(0).getProduct());
@@ -53,6 +64,13 @@ public class CartController {
     public String displayCartByOrderId(@RequestParam("order_id") long order_id, Model model){
         List<OrderProduct> products_in_cart = orderProductRepository.getProductsInCart((int) order_id);
         CartForm cartForm = new CartForm(products_in_cart);
+
+        float total_price = 0;
+        for(int i = 0; i<products_in_cart.size(); i++) {
+            total_price += products_in_cart.get(i).getProduct().getPrice() * products_in_cart.get(i).getQuantity();
+        }
+
+        model.addAttribute("totalPrice", total_price);
         model.addAttribute("order_id", (int) order_id);
         model.addAttribute("cartForm", cartForm);
 
@@ -83,12 +101,12 @@ public class CartController {
 
     // delete product from cart
     @GetMapping("delete")
-    public RedirectView deleteCartProduct(@RequestParam("order_id") long order_id, @RequestParam("product_id") long product_id, @Valid @ModelAttribute("product") OrderProduct product, BindingResult result, Model model, RedirectAttributes attributes) {
-        if(result.hasErrors()){
-            System.out.println("There was a error "+result);
-        }
-        System.out.println("yoyoyoyoyyoyo");
-
+    public RedirectView deleteCartProduct(@RequestParam("order_id") long order_id, @RequestParam("product_id") long product_id, Model model, RedirectAttributes attributes) {
+        Order order = orderRepository.findById((int)order_id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid staff Id:" + order_id));
+        Product product = productRepository.findById((int)product_id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid staff Id:" + product_id));
+        orderProductRepository.deleteByOrderAndProduct(order, product);
         attributes.addAttribute("order_id", (int) order_id);
         return new RedirectView("/cart/edit") ;
     }

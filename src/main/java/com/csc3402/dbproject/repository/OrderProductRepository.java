@@ -1,5 +1,6 @@
 package com.csc3402.dbproject.repository;
 
+import com.csc3402.dbproject.model.Order;
 import com.csc3402.dbproject.model.OrderProduct;
 import com.csc3402.dbproject.model.OrderProductId;
 import com.csc3402.dbproject.model.Product;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,4 +22,7 @@ public interface OrderProductRepository extends JpaRepository<OrderProduct, Orde
     // return all products in cart
     @Query("SELECT op FROM OrderProduct op LEFT JOIN Product p ON op.product.productId = p.productId WHERE op.order.orderId = :order_id")
     List<OrderProduct> getProductsInCart(@Param("order_id") int order_id);
+
+    @Transactional
+    void deleteByOrderAndProduct(Order order, Product product);
 }
