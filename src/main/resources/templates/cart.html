@@ -33,10 +33,10 @@
         <div class="cart">
             <form
                     action="#"
-                    th:each="product, iterStat: ${cart_products}"
-                    th:action="@{/cart/update (order_id=${product.order.orderId}, product_id=${product.product.productId})}"
-                    th:method="post"
-                    th:object="${new_product}"
+                    th:object="${cartForm}"
+                    th:each="product, iterStat: ${cartForm.cartList}"
+                    th:action="@{/cart/update (order_id=${product.order.orderId}, product_id=${product.product.productId}, index=${iterStat.index})}"
+                    th:method="POST"
                     class="cart-item"
             >
                 <img th:src="@{${'/' + product.getProduct().getImage()}}" alt="Product 1">
@@ -48,15 +48,13 @@
                         <div class="quantity">
                             <button class="quantity-btn decrease">-</button>
 
-<!--                            <input-->
-<!--                                    type="number"-->
-<!--                                    th:field="*{quantity}"-->
-<!--                                    class="quantity-input"-->
-<!--                            >-->
-                            <div
-                                    th:text="${product.getQuantity()}"
+                            <input type="hidden" th:field="*{cartList[__${iterStat.index}__].order}" />
+                            <input type="hidden" th:field="*{cartList[__${iterStat.index}__].product}" />
+                            <input
+                                    type="number"
+                                    th:field="*{cartList[__${iterStat.index}__].quantity}"
                                     class="quantity-input"
-                            ></div>
+                            >
                             <button class="quantity-btn increase">+</button>
                         </div>
                         <div style="display: flex; justify-content: center; gap: 10px;">
@@ -104,7 +102,7 @@
 
     decreaseButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const input = document.querySelector('.quantity-input');
+            const input = button.nextElementSibling;
             const value = parseInt(input.value);
             if (value > 1) {
                 input.value = value - 1;
@@ -114,7 +112,7 @@
 
     increaseButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const input = document.querySelector('.quantity-input')
+            const input = button.previousElementSibling;
             const value = parseInt(input.value);
             input.value = value + 1;
         });

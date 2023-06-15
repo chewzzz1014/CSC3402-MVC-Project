@@ -19,7 +19,7 @@ public class OrderProduct {
     @JoinColumn(name = "product_Id")
     private Product product;
 
-    @Column(name = "quantity", columnDefinition = "integer default 0")
+    @Column(name = "quantity", columnDefinition = "integer default 1")
     private Integer quantity;
 
 

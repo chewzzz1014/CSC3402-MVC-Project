@@ -1,6 +1,8 @@
 package com.csc3402.dbproject.controller;
 
+import com.csc3402.dbproject.model.CartForm;
 import com.csc3402.dbproject.model.OrderProduct;
+import com.csc3402.dbproject.model.OrderProductId;
 import com.csc3402.dbproject.model.Product;
 import com.csc3402.dbproject.repository.OrderProductRepository;
 import com.csc3402.dbproject.repository.OrderRepository;
@@ -22,23 +24,32 @@ public class CartController {
 
     private final OrderRepository orderRepository;
     private final OrderProductRepository orderProductRepository;
-    private EntityManager entityManager;
 
     CartController(OrderRepository orderRepository, OrderProductRepository orderProductRepository) {
         this.orderRepository = orderRepository;
         this.orderProductRepository = orderProductRepository;
     }
 
+//    @GetMapping("{order_id}")
+//    public String displayCart(@PathVariable("order_id") long order_id, Model model){
+//        List<OrderProduct> products_in_cart = orderProductRepository.getProductsInCart((int) order_id);
+//        CartForm cartForm = new CartForm(products_in_cart);
+//        model.addAttribute("cartForm", cartForm);
+//        return "cart";
+//    }
+
     @GetMapping("display/{customer_id}")
     public String displayCart(@PathVariable("customer_id") long customer_id, Model model){
         // get the customer's order id (with latest date)
         long order_id = orderRepository.getCustomerLatestOrderId((int) customer_id);
 
-        // then get all products in the cart using the order id obtained (from order_product; make sure has_check_out = 0)
+        // then get all products in the cart using the order id obtained (from order_product)
         List<OrderProduct> products_in_cart = orderProductRepository.getProductsInCart((int) order_id);
-        model.addAttribute("cart_products", products_in_cart);
+        CartForm cartForm = new CartForm(products_in_cart);
 
-        model.addAttribute("new_product", new OrderProduct());
+//        model.addAttribute("cart_products", products_in_cart);
+        model.addAttribute("cartForm", cartForm);
+
 //        System.out.println(products_in_cart.get(0).getProduct());
 //        System.out.println(products_in_cart.get(0).getOrder());
 //        System.out.println(products_in_cart.get(0).getQuantity());
@@ -48,14 +59,20 @@ public class CartController {
 
 
     // update product's quantity in cart
-    // @ModelAttribute("product")
     @PostMapping("update")
-    public String updateCartProductQuantity(@RequestParam("order_id") long order_id, @RequestParam("product_id") long product_id, @Valid @ModelAttribute("product") OrderProduct product, BindingResult result, Model model) {
+    public String updateCartProductQuantity(@RequestParam("order_id") long order_id, @RequestParam("product_id") long product_id, @RequestParam("index") long index, @Valid @ModelAttribute("cartForm") CartForm cartForm, BindingResult result, Model model) {
         if(result.hasErrors()){
             System.out.println("There was a error "+result);
         }
-        System.out.println(product);
-//        return "redirect:/";
+
+        List<OrderProduct> updated_cart = cartForm.getCartList();
+        OrderProduct updated_cart_product = updated_cart.get((int)index);
+        updated_cart_product.setId(
+                new OrderProductId(updated_cart_product.getOrder().getOrderId(),
+                                   updated_cart_product.getProduct().getProductId())
+        );
+
+        orderProductRepository.save(updated_cart_product);
         return "";
     }
 
