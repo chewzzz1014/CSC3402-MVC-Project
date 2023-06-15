@@ -331,6 +331,7 @@ section {
     padding: 5px 10px;
     cursor: pointer;
     transition: background 0.5s;
+    border-width: 0px;
 }
 
 .remove-btn:hover {

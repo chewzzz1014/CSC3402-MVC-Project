@@ -30,29 +30,72 @@
 <h2>SHOPPING CART</h2>
 
 <section>
-    <div th:each="product : ${cart_products}" class="cart">
-        <div class="cart-item">
-            <img th:src="@{${'/' + product.getProduct().getImage()}}" alt="Product 1">
-            <div class="cart-item-details">
-                <h3 th:text="${product.getProduct().getProductname()}"></h3>
-                <p class="price">RM<span th:text="${product.getProduct().getPrice()}"></span></p>
-                <div class="quantity">
-                    <button class="quantity-btn decrease">-</button>
-                    <input type="number" class="quantity-input" th:value="${product.getQuantity() > 0} ? ${product.getQuantity()} : '1'">
-                    <button class="quantity-btn increase">+</button>
-                </div>
-                <button class="remove-btn">Remove</button>
-            </div>
-        </div>
-    </div>
+        <div class="cart">
+            <form
+                    action="#"
+                    th:each="product, iterStat: ${cart_products}"
+                    th:action="@{/cart/update (order_id=${product.order.orderId}, product_id=${product.product.productId})}"
+                    th:method="post"
+                    th:object="${new_product}"
+                    class="cart-item"
+            >
+                <img th:src="@{${'/' + product.getProduct().getImage()}}" alt="Product 1">
+                <div class="cart-item-details">
+                    <h3 th:text="${product.getProduct().getProductname()}"></h3>
+                    <p class="price">RM<span th:text="${product.getProduct().getPrice()}"></span></p>
 
-    <div class="cart-footer">
-        <p class="total">Total Price: <span class="total-price">RM298.98</span></p>
-    </div>
-    <div class="cart-footer">
-        <button class="checkout-btn" style="margin-right: 10px;">Save and Continue Shopping</button>
-        <button class="checkout-btn">Checkout</button>
-    </div>
+                    <div style="width: 250px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <div class="quantity">
+                            <button class="quantity-btn decrease">-</button>
+
+<!--                            <input-->
+<!--                                    type="number"-->
+<!--                                    th:field="*{quantity}"-->
+<!--                                    class="quantity-input"-->
+<!--                            >-->
+                            <div
+                                    th:text="${product.getQuantity()}"
+                                    class="quantity-input"
+                            ></div>
+                            <button class="quantity-btn increase">+</button>
+                        </div>
+                        <div style="display: flex; justify-content: center; gap: 10px;">
+                            <div class="remove-btn">
+                                <a
+                                        th:href="@{/cart/delete (order_id=${product.order.orderId}, product_id=${product.product.productId})}"
+                                        style="color: #fff; text-decoration: none;"
+                                >
+                                    Remove
+                                </a>
+                            </div>
+                            <button
+                                    class="remove-btn"
+                                    type="submit"
+                            >
+                                Update
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="cart-footer">
+            <p class="total">Total Price: <span class="total-price">RM298.98</span></p>
+        </div>
+        <div class="cart-footer">
+            <button
+                    class="checkout-btn"
+                    style="margin-right: 10px;"
+            >
+                Continue Shopping
+            </button>
+            <button
+                    class="checkout-btn">
+                Checkout
+            </button>
+        </div>
+
 </section>
 
 <script>
@@ -61,7 +104,7 @@
 
     decreaseButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const input = button.nextElementSibling;
+            const input = document.querySelector('.quantity-input');
             const value = parseInt(input.value);
             if (value > 1) {
                 input.value = value - 1;
@@ -71,7 +114,7 @@
 
     increaseButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const input = button.previousElementSibling;
+            const input = document.querySelector('.quantity-input')
             const value = parseInt(input.value);
             input.value = value + 1;
         });

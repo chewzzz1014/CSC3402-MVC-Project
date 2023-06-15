@@ -8,10 +8,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -34,8 +36,9 @@ public class CartController {
 
         // then get all products in the cart using the order id obtained (from order_product; make sure has_check_out = 0)
         List<OrderProduct> products_in_cart = orderProductRepository.getProductsInCart((int) order_id);
-
         model.addAttribute("cart_products", products_in_cart);
+
+        model.addAttribute("new_product", new OrderProduct());
 //        System.out.println(products_in_cart.get(0).getProduct());
 //        System.out.println(products_in_cart.get(0).getOrder());
 //        System.out.println(products_in_cart.get(0).getQuantity());
@@ -43,6 +46,26 @@ public class CartController {
         return "cart";
     }
 
-    // add to cart
+
+    // update product's quantity in cart
+    // @ModelAttribute("product")
+    @PostMapping("update")
+    public String updateCartProductQuantity(@RequestParam("order_id") long order_id, @RequestParam("product_id") long product_id, @Valid @ModelAttribute("product") OrderProduct product, BindingResult result, Model model) {
+        if(result.hasErrors()){
+            System.out.println("There was a error "+result);
+        }
+        System.out.println(product);
+//        return "redirect:/";
+        return "";
+    }
+
+    @GetMapping("delete")
+    public String deleteCartProduct(@RequestParam("order_id") long order_id, @RequestParam("product_id") long product_id, @Valid @ModelAttribute("product") OrderProduct product, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+        if(result.hasErrors()){
+            System.out.println("There was a error "+result);
+        }
+        System.out.println("yoyoyoyoyyoyo");
+        return "redirect:/";
+    }
 
 }

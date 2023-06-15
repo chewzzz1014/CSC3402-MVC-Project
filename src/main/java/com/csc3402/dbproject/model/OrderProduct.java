@@ -65,6 +65,12 @@ public class OrderProduct {
     }
 
     public OrderProduct() {
+        this.quantity = 0;
+        this.hascheckout = 0;
+    }
+
+    public OrderProduct(Integer quantity) {
+        this.quantity = quantity;
         this.hascheckout = 0;
     }
 
