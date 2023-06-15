@@ -6,8 +6,29 @@
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/checkout.css}">
 </head>
 <body class="bg-light">
+<div class="navbar">
+    <div class="logo">
+        <img th:src="@{/Xiel.png}" width="270px">
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/products/all">All Products</a></li>
+            <li><a href="/products/men">Men</a></li>
+            <li><a href="/products/women">Women</a></li>
+        </ul>
+    </nav>
+    <a href="" class="logo-link">
+        <img th:src="@{/LogoCart.png}" width="30px" height="30px" class="logo-icon">
+    </a>
+    <a href="your-link-here" class="logo-link">
+        <img th:src="@{/LogoUser.png}" width="30px" height="30px" class="logo-icon">
+    </a>
+</div>
+
 <div class="container">
     <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
@@ -89,20 +110,40 @@
                     </div>
                 </div>
                 <hr class="mb-4">
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Confirm Order</button>
+                <button
+                        class="btn btn-primary btn-lg btn-block"
+                        type="submit"
+                        style="
+                        background-color: #C8B796 ;
+                        color: #fff;
+                        border-radius: 5px;
+                        padding: 10px 20px;
+                        cursor: pointer;
+                        font-size: 16px;
+                        transition: background 0.3s;"
+                >
+                    Confirm Order
+                </button>
             </form>
         </div>
     </div>
-
-    <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">© 2017-2018 Company Name</p>
-        <ul class="list-inline">
-            <li class="list-inline-item"><a href="#">Privacy</a></li>
-            <li class="list-inline-item"><a href="#">Terms</a></li>
-            <li class="list-inline-item"><a href="#">Support</a></li>
-        </ul>
-    </footer>
 </div>
+<footer>
+    <div class="footer-content">
+        <h3>XieL Clothing</h3>
+        <p> With a focus on quality craftsmanship and trendy designs, Xiel Clothing Store brings together a curated collection of apparel that caters to diverse fashion
+            preferences. Explore their extensive selection and elevate your wardrobe with their premium offerings.</p>
+        <ul class="socials">
+            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-google-plus"></i></a></li>
+            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+        </ul>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2023 Xiel Clothing Store. All rights reserved.</p>
+    </div>
+</footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
