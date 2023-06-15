@@ -17,7 +17,7 @@ public interface OrderProductRepository extends JpaRepository<OrderProduct, Orde
     List<OrderProduct> findOrderProductByOrderId(@Param("id")int id);
 
     // return all products in cart
-    @Query("SELECT op FROM OrderProduct op LEFT JOIN Product p ON op.product.productId = p.productId WHERE op.order.orderId = :order_id AND op.hascheckout = 0")
+    @Query("SELECT op FROM OrderProduct op LEFT JOIN Product p ON op.product.productId = p.productId WHERE op.order.orderId = :order_id")
     List<OrderProduct> getProductsInCart(@Param("order_id") int order_id);
 
 }

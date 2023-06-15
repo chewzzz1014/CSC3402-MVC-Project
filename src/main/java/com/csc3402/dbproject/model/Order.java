@@ -21,14 +21,17 @@ public class Order implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date last_updated;
 
-    @Column(name = "payment_method", columnDefinition = "varchar(250) default 'default payment'")
+    @Column(name = "payment_method")
     private String paymentmethod;
 
-    @Column(name = "address", columnDefinition = "varchar(250) default 'K12, UPM'")
+    @Column(name = "address")
     private String address;
 
-    @Column(name = "phone_num", columnDefinition = "varchar(250) default '1234-6788854'")
+    @Column(name = "phone_num")
     private String phonenum;
+
+    @Column(name = "has_check_out", columnDefinition = "integer default 0")
+    private Integer hascheckout;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -88,11 +91,19 @@ public class Order implements Serializable {
         this.customer = customer;
     }
 
+    public Integer getHascheckout() {
+        return hascheckout;
+    }
+
+    public void setHascheckout(Integer hascheckout) {
+        this.hascheckout = hascheckout;
+    }
+
     public Order() {
         super();
     }
 
-    public Order(Integer totalprice, Date date, String paymentmethod, String address, String phonenum, Customer customer) {
+    public Order(Integer totalprice, Date date, String paymentmethod, String address, String phonenum, Customer customer, Integer hascheckout) {
         super();
         this.totalprice = totalprice;
         this.last_updated = date;
@@ -100,6 +111,7 @@ public class Order implements Serializable {
         this.address = address;
         this.phonenum = phonenum;
         this.customer = customer;
+        this.hascheckout = hascheckout;
     }
 
     @Override
@@ -112,6 +124,7 @@ public class Order implements Serializable {
                 ", address='" + address + '\'' +
                 ", phonenum='" + phonenum + '\'' +
                 ", customer=" + customer +
+                ", hascheckout=" + hascheckout +
                 '}';
     }
 }

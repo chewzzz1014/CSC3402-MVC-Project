@@ -1,6 +1,7 @@
 package com.csc3402.dbproject.model;
 
 import jakarta.persistence.*;
+import com.csc3402.dbproject.model.Order;
 
 @Entity
 public class OrderProduct {
@@ -21,8 +22,6 @@ public class OrderProduct {
     @Column(name = "quantity", columnDefinition = "integer default 0")
     private Integer quantity;
 
-    @Column(name = "has_check_out", columnDefinition = "integer default 0")
-    private Integer hascheckout;
 
     public OrderProductId getId() {
         return id;
@@ -56,30 +55,19 @@ public class OrderProduct {
         this.quantity = quantity;
     }
 
-    public Integer getHascheckout() {
-        return hascheckout;
-    }
-
-    public void setHascheckout(Integer hascheckout) {
-        this.hascheckout = hascheckout;
-    }
-
     public OrderProduct() {
         this.quantity = 0;
-        this.hascheckout = 0;
     }
 
     public OrderProduct(Integer quantity) {
         this.quantity = quantity;
-        this.hascheckout = 0;
     }
 
-    public OrderProduct(Order order, Product product, Integer quantity, Integer hascheckout){
+    public OrderProduct(Order order, Product product, Integer quantity){
         this.id = new OrderProductId(order.getOrderId(), product.getProductId());
         this.order = order;
         this.product = product;
         this.quantity = quantity;
-        this.hascheckout = hascheckout;
     }
 
     @Override
@@ -89,7 +77,6 @@ public class OrderProduct {
                 ", order=" + order +
                 ", product=" + product +
                 ", quantity='" + quantity + '\'' +
-                ", hascheckout=" + hascheckout +
                 '}';
     }
 }
