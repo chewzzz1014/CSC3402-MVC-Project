@@ -39,25 +39,34 @@ public class CartController {
     public String displayCartByCustomerId(Model model){
         try{
             // get the customer's cart order id
-            long order_id = orderRepository.getCustomerLatestOrderId((int) customer_id);
+            Integer order_id = orderRepository.getCustomerLatestOrderId2((int) customer_id);
+            System.out.println(order_id);
 
-            // then get all products in the cart using the order id obtained (from order_product)
-            List<OrderProduct> products_in_cart = orderProductRepository.getProductsInCart((int) order_id);
-            CartForm cartForm = new CartForm(products_in_cart);
+            // check if has order
+            if(order_id != null && order_id != -1) {
+                // then get all products in the cart using the order id obtained (from order_product)
+                List<OrderProduct> products_in_cart = orderProductRepository.getProductsInCart(order_id);
+                CartForm cartForm = new CartForm(products_in_cart);
 
-            float total_price = 0;
-            for(int i = 0; i<products_in_cart.size(); i++) {
-                total_price += products_in_cart.get(i).getProduct().getPrice() * products_in_cart.get(i).getQuantity();
+                float total_price = 0;
+                for(int i = 0; i<products_in_cart.size(); i++) {
+                    total_price += products_in_cart.get(i).getProduct().getPrice() * products_in_cart.get(i).getQuantity();
+                }
+
+                model.addAttribute("totalPrice", total_price);
+                model.addAttribute("order_id", order_id);
+                model.addAttribute("cartForm", cartForm);
+                model.addAttribute("has_item", "true");
+
+                // if no more product in cart
+                if (products_in_cart.size() == 0) {
+                    model.addAttribute("has_item", "false");
+                } else {
+                    model.addAttribute("has_item", "true");
+                }
+            } else {
+                model.addAttribute("has_item", "false");
             }
-
-            model.addAttribute("totalPrice", total_price);
-            model.addAttribute("order_id", order_id);
-            model.addAttribute("cartForm", cartForm);
-            model.addAttribute("has_item", "true");
-
-//        System.out.println(products_in_cart.get(0).getProduct());
-//        System.out.println(products_in_cart.get(0).getOrder());
-//        System.out.println(products_in_cart.get(0).getQuantity());
         }catch(Exception e){
             model.addAttribute("has_item", "false");
         }
@@ -67,52 +76,71 @@ public class CartController {
     // display cart based on order id
     @GetMapping("edit")
     public String displayCartByOrderId(@RequestParam("order_id") long order_id, Model model){
-        List<OrderProduct> products_in_cart = orderProductRepository.getProductsInCart((int) order_id);
-        CartForm cartForm = new CartForm(products_in_cart);
+        try{
+            List<OrderProduct> products_in_cart = orderProductRepository.getProductsInCart((int) order_id);
+            CartForm cartForm = new CartForm(products_in_cart);
 
-        float total_price = 0;
-        for(int i = 0; i<products_in_cart.size(); i++) {
-            total_price += products_in_cart.get(i).getProduct().getPrice() * products_in_cart.get(i).getQuantity();
+            float total_price = 0;
+            for(int i = 0; i<products_in_cart.size(); i++) {
+                total_price += products_in_cart.get(i).getProduct().getPrice() * products_in_cart.get(i).getQuantity();
+            }
+
+            model.addAttribute("totalPrice", total_price);
+            model.addAttribute("order_id", (int) order_id);
+            model.addAttribute("cartForm", cartForm);
+
+            // if no more product in cart
+            if (products_in_cart.size() == 0) {
+                model.addAttribute("has_item", "false");
+            } else {
+                model.addAttribute("has_item", "true");
+            }
+        } catch(Exception e) {
+            model.addAttribute("has_item", "false");
+            e.printStackTrace();
         }
-
-        model.addAttribute("totalPrice", total_price);
-        model.addAttribute("order_id", (int) order_id);
-        model.addAttribute("cartForm", cartForm);
 
         return "cart";
     }
 
     // update product's quantity in cart
     @PostMapping("update")
-    public String updateCartProductQuantity(@RequestParam("order_id") long order_id, @RequestParam("product_id") long product_id, @RequestParam("index") long index, @Valid @ModelAttribute("cartForm") CartForm cartForm, BindingResult result, Model model, RedirectAttributes attributes) {
-        if(result.hasErrors()){
-            System.out.println("There was a error "+result);
+    public RedirectView updateCartProductQuantity(@RequestParam("order_id") long order_id, @RequestParam("product_id") long product_id, @RequestParam("index") long index, @Valid @ModelAttribute("cartForm") CartForm cartForm, BindingResult result, Model model, RedirectAttributes attributes) {
+        try{
+            if(result.hasErrors()){
+                System.out.println("There was a error "+result);
+            }
+
+            List<OrderProduct> updated_cart = cartForm.getCartList();
+            OrderProduct updated_cart_product = updated_cart.get((int)index);
+            updated_cart_product.setId(
+                    new OrderProductId(updated_cart_product.getOrder().getOrderId(),
+                            updated_cart_product.getProduct().getProductId())
+            );
+
+            // update quantity
+            orderProductRepository.save(updated_cart_product);
+        } catch(Exception e) {
+            e.printStackTrace();
         }
 
-        List<OrderProduct> updated_cart = cartForm.getCartList();
-        OrderProduct updated_cart_product = updated_cart.get((int)index);
-        updated_cart_product.setId(
-                new OrderProductId(updated_cart_product.getOrder().getOrderId(),
-                                   updated_cart_product.getProduct().getProductId())
-        );
-
-        // update quantity
-        orderProductRepository.save(updated_cart_product);
-
-        // redirect back
-//        attributes.addAttribute("order_id", (int) order_id);
-//        return new RedirectView("/cart/edit") ;
-        return "redirect:/cart/display";
+        attributes.addAttribute("order_id", (int) order_id);
+        return new RedirectView("/cart/edit") ;
     }
 
     // delete product from cart
     @GetMapping("delete")
     public RedirectView deleteCartProduct(@RequestParam("order_id") long order_id, @RequestParam("product_id") long product_id, Model model, RedirectAttributes attributes) {
-        Order order = orderRepository.findById((int)order_id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid order Id:" + order_id));
-        Product product = productRepository.findById((int)product_id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + product_id));
-        orderProductRepository.deleteByOrderAndProduct(order, product);
+        try{
+            Order order = orderRepository.findById((int)order_id)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid order Id:" + order_id));
+            Product product = productRepository.findById((int)product_id)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + product_id));
+            orderProductRepository.deleteByOrderAndProduct(order, product);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
         attributes.addAttribute("order_id", (int) order_id);
         return new RedirectView("/cart/edit") ;
     }

@@ -26,7 +26,7 @@ public class OrderProductController {
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
     private final ProductRepository productRepository;
-    private Integer customer_id = 1;
+    private Integer customer_id = 2;
 
     public OrderProductController(OrderProductRepository orderProductRepository, OrderRepository orderRepository, CustomerRepository customerRepository, ProductRepository productRepository) {
         this.orderProductRepository = orderProductRepository;
@@ -37,48 +37,68 @@ public class OrderProductController {
 
     // add product to cart from product page
     @GetMapping("/add")
-    public RedirectView addProductToCart(@RequestParam("product_id") long product_id, RedirectAttributes attributes) {
-        Customer customer = customerRepository.findById(customer_id)
-                        .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id:" + customer_id));
-        Product product = productRepository.findById((int) product_id)
-                        .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + product_id));
+    public String addProductToCart(@RequestParam("product_id") long product_id) {
+        try{
+            Customer customer = customerRepository.findById(customer_id)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id:" + customer_id));
+            Product product = productRepository.findById((int) product_id)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + product_id));
 
-        long foundOrderId = orderRepository.getCustomerLatestOrderId(customer_id);
+            Integer foundOrderId = orderRepository.getCustomerLatestOrderId2(customer_id);
+            System.out.println(foundOrderId);
 
-        Optional<Order> order = orderRepository.findById((int)foundOrderId);
-        Order foundOrder = order
-                            .orElseGet(() -> {
-                                Order newOrder = new Order();
-                                newOrder.setCustomer(customer);
-                                orderRepository.save(newOrder);
-                                return newOrder;
-                            });
+           // order is found
+            if (foundOrderId != null && foundOrderId != -1) {
+                Optional<Order> order = orderRepository.findById(foundOrderId);
+                Order foundOrder = order
+                        .orElseGet(() -> {
+                            Order newOrder = new Order();
+                            newOrder.setCustomer(customer);
+                            orderRepository.save(newOrder);
+                            return newOrder;
+                        });
 
+                // check if item is already in cart, If yes, just increase quantity
+                List<OrderProduct> products_in_cart = orderProductRepository.getProductsInCart(foundOrder.getOrderId());
+                System.out.println(products_in_cart);
 
-        // check if item is already in cart, If yes, just increase quanitity
-        List<OrderProduct> products_in_cart = orderProductRepository.getProductsInCart(foundOrder.getOrderId());
-        System.out.println(products_in_cart);
+                boolean isFound = false;
+                for(OrderProduct op : products_in_cart) {
+                    if(op.getProduct().getProductId() == (int) product_id) {
+                        op.setQuantity(op.getQuantity() + 1);
+                        orderProductRepository.save(op);
+                        isFound = true;
+                        break;
+                    }
+                }
 
-        boolean isFound = false;
-        for(OrderProduct op : products_in_cart) {
-            if(op.getProduct().getProductId() == (int) product_id) {
-                op.setQuantity(op.getQuantity() + 1);
-                orderProductRepository.save(op);
-                isFound = true;
-                break;
+                if(!isFound) {
+                    OrderProduct orderProduct = new OrderProduct();
+                    orderProduct.setId(new OrderProductId(foundOrder.getOrderId(), (int)product_id));
+                    orderProduct.setOrder(foundOrder);
+                    orderProduct.setProduct(product);
+                    orderProduct.setQuantity(1);
+                    orderProductRepository.save(orderProduct);
+                }
+            } else {
+                // no order found. create new order
+                Order newOrder = new Order();
+                newOrder.setCustomer(customer);
+                orderRepository.save(newOrder);
+
+                // add product
+                OrderProduct orderProduct = new OrderProduct();
+                orderProduct.setId(new OrderProductId(newOrder.getOrderId(), (int)product_id));
+                orderProduct.setOrder(newOrder);
+                orderProduct.setProduct(product);
+                orderProduct.setQuantity(1);
+                orderProductRepository.save(orderProduct);
             }
+
+        } catch (Exception e){
+            e.printStackTrace();
         }
 
-        if(!isFound) {
-            OrderProduct orderProduct = new OrderProduct();
-            orderProduct.setId(new OrderProductId(foundOrder.getOrderId(), (int)product_id));
-            orderProduct.setOrder(foundOrder);
-            orderProduct.setProduct(product);
-            orderProduct.setQuantity(1);
-            orderProductRepository.save(orderProduct);
-        }
-
-        attributes.addAttribute("order_id", foundOrder.getOrderId());
-        return new RedirectView("/cart/edit") ;
+        return "redirect:/cart/display";
     }
 }

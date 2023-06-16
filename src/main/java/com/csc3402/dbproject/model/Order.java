@@ -104,6 +104,11 @@ public class Order implements Serializable {
 
     public Order() {
         super();
+        this.hascheckout = 0;
+        this.last_updated = new Timestamp(System.currentTimeMillis());
+        this.address = "";
+        this.paymentmethod = "credit";
+        this.phonenum = "";
     }
 
     public Order(float totalprice, Timestamp date, String paymentmethod, String address, String phonenum, Customer customer, Integer hascheckout) {
