@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -46,9 +47,9 @@ public class CheckoutController {
     }
 
     @PostMapping("update")
-    public String checkoutOrder(@RequestParam("order_id") long order_id, @Valid @ModelAttribute("order") Order order, BindingResult result, Model model, RedirectAttributes attributes) {
+    public RedirectView checkoutOrder(@RequestParam("order_id") long order_id, @Valid @ModelAttribute("order") Order order, BindingResult result, Model model, RedirectAttributes attributes) {
         if (result.hasErrors()) {
-            return "add-person";
+            return new RedirectView("/") ;
         }
         System.out.println(order);
 
@@ -61,6 +62,8 @@ public class CheckoutController {
         foundOrder.setPhonenum(order.getPhonenum());
         foundOrder.setHascheckout(1);
         orderRepository.save(foundOrder);
-      return "order-list";
+
+        attributes.addAttribute("order_id", (int) order_id);
+        return new RedirectView("/orderlist/view") ;
     }
 }

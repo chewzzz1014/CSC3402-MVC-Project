@@ -27,10 +27,10 @@ public class Order implements Serializable {
     @Column(name = "payment_method", columnDefinition = "varchar(250) default 'credit'")
     private String paymentmethod;
 
-    @Column(name = "address")
+    @Column(name = "address", columnDefinition = "varchar(250) default 'no address'")
     private String address;
 
-    @Column(name = "phone_num")
+    @Column(name = "phone_num", columnDefinition = "varchar(250) default 'no phonenum'")
     private String phonenum;
 
     @Column(name = "has_check_out", columnDefinition = "integer default 0")
