@@ -63,7 +63,7 @@
             <h4 class="mb-3">Billing address</h4>
             <form
                     class="needs-validation"
-                    novalidate=""
+                    novalidate
                     action="#"
                     th:object="${checkout_form}"
                     th:action="@{/checkout/update (order_id=${user_order.orderId})}"
@@ -104,13 +104,12 @@
                             th:field="*{order.phonenum}"
                             required
                     >
-                    <span
-                            th:if="${#fields.hasErrors('order.phonenum')}" th:errors="*{order.phonenum}"
-                            class="text-danger">
-                    </span>
+                    <!--  form validation -->
                     <div class="invalid-feedback">
                         Please provide phone number.
                     </div>
+                    <p class="text-danger" th:errors="*{order.phonenum}"
+                    th:if="${#fields.hasErrors('order.phonenum')}"></p>
                 </div>
 
                 <div class="mb-3">
@@ -123,13 +122,12 @@
                             th:field="*{order.address}"
                             required
                     >
-                    <span
-                            th:if="${#fields.hasErrors('order.address')}" th:errors="*{order.address}"
-                            class="text-danger">
-                    </span>
+                    <!--  form validation -->
                     <div class="invalid-feedback">
                         Please provide shipping address.
                     </div>
+                    <p class="text-danger" th:errors="*{order.address}"
+                       th:if="${#fields.hasErrors('order.address')}"></p>
                 </div>
 
                 <hr class="mb-4">
@@ -198,5 +196,25 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
+<script>
+    (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
 </body>
 </html>
