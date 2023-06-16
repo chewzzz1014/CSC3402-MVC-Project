@@ -26,7 +26,7 @@
 
 <h2>SHOPPING CART</h2>
 
-<section>
+<section th:if="${has_item} == 'true'">
         <div class="cart">
             <form
                     action="#"
@@ -93,7 +93,50 @@
         </div>
 
 </section>
+<section th:if="${has_item} == 'false'" style="padding: 0px; display: flex; flex-direction: column; justify-content: space-between; width: 100%; height: 80vh;">
+    <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+        <h1>No Product Found!</h1>
+        <button
+                class="checkout-btn"
+                style="margin-right: 10px;"
+        >
+            <a style="text-decoration: none; color: #fff;" th:href="@{/products/all}">Continue Shopping</a>
+        </button>
+    </div>
 
+    <footer style="padding: 0px;">
+        <div class="footer-content">
+            <h3>XieL Clothing</h3>
+            <p> With a focus on quality craftsmanship and trendy designs, Xiel Clothing Store brings together a curated collection of apparel that caters to diverse fashion
+                preferences. Explore their extensive selection and elevate your wardrobe with their premium offerings.</p>
+            <ul class="socials">
+                <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fab fa-google-plus"></i></a></li>
+                <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+            </ul>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Xiel Clothing Store. All rights reserved.</p>
+        </div>
+    </footer>
+</section>
+<footer th:if="${has_item} == 'true'">
+    <div class="footer-content">
+        <h3>XieL Clothing</h3>
+        <p> With a focus on quality craftsmanship and trendy designs, Xiel Clothing Store brings together a curated collection of apparel that caters to diverse fashion
+            preferences. Explore their extensive selection and elevate your wardrobe with their premium offerings.</p>
+        <ul class="socials">
+            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-google-plus"></i></a></li>
+            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+        </ul>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2023 Xiel Clothing Store. All rights reserved.</p>
+    </div>
+</footer>
 <script>
     const decreaseButtons = document.querySelectorAll('.quantity-btn.decrease');
     const increaseButtons = document.querySelectorAll('.quantity-btn.increase');
@@ -116,25 +159,5 @@
         });
     });
 </script>
-
-
-<footer>
-    <div class="footer-content">
-        <h3>XieL Clothing</h3>
-        <p> With a focus on quality craftsmanship and trendy designs, Xiel Clothing Store brings together a curated collection of apparel that caters to diverse fashion
-            preferences. Explore their extensive selection and elevate your wardrobe with their premium offerings.</p>
-        <ul class="socials">
-            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
-            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="#"><i class="fab fa-google-plus"></i></a></li>
-            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-        </ul>
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; 2023 Xiel Clothing Store. All rights reserved.</p>
-    </div>
-</footer>
-
-
 </body>
 </html>

@@ -29,6 +29,7 @@ INSERT INTO products(category_id, price, quantity_in_stock, description, image, 
     VALUES(2, 89, 70, 'Quirky and Cute', 'ex2.png', 'Blue Polka Dot Dress');
 
 INSERT INTO customer(name,e_mail) VALUES('kaijie', '212858@stuednt.upm.edu.my');
+INSERT INTO customer(name,e_mail) VALUES('John', '233333@stuednt.upm.edu.my');
 
 INSERT INTO orders(customer_id) VALUES (1);
 INSERT INTO orders(customer_id) VALUES (1);
