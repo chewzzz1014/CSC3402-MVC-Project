@@ -1,6 +1,7 @@
 package com.csc3402.dbproject.controller;
 
 import com.csc3402.dbproject.model.OrderProduct;
+import com.csc3402.dbproject.model.OrderProductId;
 import com.csc3402.dbproject.model.Product;
 import com.csc3402.dbproject.repository.CustomerRepository;
 import com.csc3402.dbproject.repository.OrderProductRepository;
@@ -51,10 +52,15 @@ public class OrderProductController {
                             });
 
 
+        System.out.println(customer);
+        System.out.println(product);
+        System.out.println(foundOrder);
         OrderProduct orderProduct = new OrderProduct();
+        orderProduct.setId(new OrderProductId(foundOrder.getOrderId(), (int)product_id));
         orderProduct.setOrder(foundOrder);
         orderProduct.setProduct(product);
         orderProduct.setQuantity(1);
+        System.out.println(orderProduct);
         orderProductRepository.save(orderProduct);
 
         attributes.addAttribute("order_id", foundOrder.getOrderId());
