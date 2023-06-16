@@ -69,6 +69,7 @@
                     th:action="@{/checkout/update (order_id=${user_order.orderId})}"
                     th:method="POST"
             >
+<!--                <input type="hidden" th:field="*{itemList}" />-->
 
                 <div th:each="product, iterStat: ${itemList}">
                     <input type="hidden" th:field="*{itemList[__${iterStat.index}__].order}" />

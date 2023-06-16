@@ -61,17 +61,23 @@ public class CheckoutController {
                 System.out.println("There was a error "+result);
             }
 
-            System.out.println(checkoutForm.getOrder());
-            System.out.println(checkoutForm.getItemList());
-
-            // get order details and list of items from wrapper received from form
+            // get order details and list of items from form
             Order foundOrder = orderRepository.findById((int) order_id)
                     .orElseThrow(() -> new IllegalArgumentException("Invalid order Id:" + order_id));
             Order order = checkoutForm.getOrder();
-            List<OrderProduct> cartList = checkoutForm.getItemList();
+            List<OrderProduct> itemList = checkoutForm.getItemList();
+
+            // in case the itemList returned is null
+            if(itemList == null || itemList.size() == 0){
+                List<OrderProduct> products_in_cart = orderProductRepository.getProductsInCart((int)order_id);
+                itemList = products_in_cart;
+            }
+
+            System.out.println(order);
+            System.out.println(itemList);
 
             // update product quantity in stock
-            for(OrderProduct op : cartList) {
+            for(OrderProduct op : itemList) {
                 int product_id = op.getProduct().getProductId();
                 Product foundProduct = productRepository.findById(product_id)
                         .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + product_id));

@@ -12,24 +12,24 @@ public class CheckoutForm {
     public CheckoutForm() {
     }
 
-    public CheckoutForm(List<com.csc3402.dbproject.model.OrderProduct> itemList, com.csc3402.dbproject.model.Order order) {
+    public CheckoutForm(List<OrderProduct> itemList, com.csc3402.dbproject.model.Order order) {
         this.itemList = itemList;
         this.order = order;
     }
 
-    public List<com.csc3402.dbproject.model.OrderProduct> getItemList() {
+    public List<OrderProduct> getItemList() {
         return itemList;
     }
 
-    public void setItemList(List<com.csc3402.dbproject.model.OrderProduct> itemList) {
+    public void setItemList(List<OrderProduct> itemList) {
         this.itemList = itemList;
     }
 
-    public com.csc3402.dbproject.model.Order getOrder() {
+    public Order getOrder() {
         return order;
     }
 
-    public void setOrder(com.csc3402.dbproject.model.Order order) {
+    public void setOrder(Order order) {
         this.order = order;
     }
 
