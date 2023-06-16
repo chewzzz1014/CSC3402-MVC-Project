@@ -40,7 +40,7 @@
             <!--                can use thymeleaf to loop all the items in the current order here-->
 
             <ul class="list-group mb-3">
-                <div th:each="product: ${checkoutForm.cartList}" >
+                <div th:each="product: ${checkout_form.itemList}" >
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
                             <h6 class="my-0" th:text="${product.getProduct().getProductname()}"></h6>
@@ -67,12 +67,17 @@
             <form
                     class="needs-validation"
                     novalidate=""
-                    th:object="${checkoutForm}"
                     action="#"
+                    th:object="${checkout_form}"
                     th:action="@{/checkout/update (order_id=${user_order.orderId})}"
                     th:method="POST"
             >
-                <input type="hidden" th:field="*{cartList}"/>
+
+                <div th:each="product, iterStat: ${itemList}">
+                    <input type="hidden" th:field="*{itemList[__${iterStat.index}__].order}" />
+                    <input type="hidden" th:field="*{itemList[__${iterStat.index}__].product}" />
+                    <input type="hidden" th:field="*{itemList[__${iterStat.index}__].quantity}" />
+                </div>
 
                 <input
                         type="hidden"
@@ -82,7 +87,14 @@
                         type="hidden"
                         th:field="*{order.totalprice}"
                 >
-
+                <input
+                        type="hidden"
+                        th:field="*{order.customer}"
+                >
+                <input
+                        type="hidden"
+                        th:field="*{order.hascheckout}"
+                >
                 <div class="mb-3 col-md-4">
                     <label for="phonenum">Phone No. </label>
                     <input

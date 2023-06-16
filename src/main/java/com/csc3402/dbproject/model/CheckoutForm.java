@@ -4,25 +4,36 @@ import java.util.List;
 import com.csc3402.dbproject.model.OrderProduct;
 import com.csc3402.dbproject.model.Order;
 
-// wrapped object to hold cart data, for handling them in th:object
+// wrapped object to hold checkout data, for handling them in th:object
 public class CheckoutForm {
-    private List<OrderProduct> cartList;
+    private List<OrderProduct> itemList;
     private Order order;
 
-    public CheckoutForm(List<OrderProduct> cartList, Order order) {
+    public CheckoutForm() {
+    }
+
+    public CheckoutForm(List<com.csc3402.dbproject.model.OrderProduct> itemList, com.csc3402.dbproject.model.Order order) {
+        this.itemList = itemList;
         this.order = order;
-        this.cartList = cartList;
     }
 
-    public List<OrderProduct> getCartList() {
-        return cartList;
+    public List<com.csc3402.dbproject.model.OrderProduct> getItemList() {
+        return itemList;
     }
 
-    public Order getOrder() {return order;}
-
-    public void setCartList(List<OrderProduct> cartList) {
-        this.cartList = cartList;
+    public void setItemList(List<com.csc3402.dbproject.model.OrderProduct> itemList) {
+        this.itemList = itemList;
     }
 
-    public void setOrder(Order order) {this.order = order;}
+    public com.csc3402.dbproject.model.Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(com.csc3402.dbproject.model.Order order) {
+        this.order = order;
+    }
+
+    public String toString() {
+        return itemList.toString() + "\n" + order.toString();
+    }
 }
