@@ -8,8 +8,6 @@ import com.csc3402.dbproject.model.Product;
 import com.csc3402.dbproject.repository.OrderProductRepository;
 import com.csc3402.dbproject.repository.OrderRepository;
 import com.csc3402.dbproject.repository.ProductRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,9 +34,10 @@ public class CartController {
         this.productRepository = productRepository;
     }
 
-    @GetMapping("display/{customer_id}")
-    public String displayCartByCustomerId(@PathVariable("customer_id") long customer_id, Model model){
-        // get the customer's order id (with latest date)
+    // display cart based on customer id
+    @GetMapping("display")
+    public String displayCartByCustomerId(Model model){
+        // get the customer's cart order id
         long order_id = orderRepository.getCustomerLatestOrderId((int) customer_id);
 
         // then get all products in the cart using the order id obtained (from order_product)
@@ -60,6 +59,7 @@ public class CartController {
         return "cart";
     }
 
+    // display cart based on order id
     @GetMapping("edit")
     public String displayCartByOrderId(@RequestParam("order_id") long order_id, Model model){
         List<OrderProduct> products_in_cart = orderProductRepository.getProductsInCart((int) order_id);
