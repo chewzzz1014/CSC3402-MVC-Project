@@ -124,3 +124,14 @@ footer {
     opacity: 0.4;
     font-weight: 200;
 }
+
+.checkout-btn {
+    background-color: #C8B796 ;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    border: none;
+}
