@@ -33,45 +33,25 @@
 <p class="small">Below are the items in your order</p>
 
 <section>
-  <div class="cart">
+  <div th:each="product : ${products}" class="cart">
     <div class="cart-item">
-      <img src="./templates/girl2.png" alt="Product 1">
+      <img th:src="@{${'/' + product.getProduct().getImage()}}" th:alt="${product.getProduct().getProductname()}">
       <div class="cart-item-details">
         <div class="flex-item">
-          <h3>Product 1</h3>
-          <p class="price">RM99.99</p>
+          <h3 th:text="${product.getProduct().getProductname()}"></h3>
+          <p class="price">RM<span th:text="${product.getProduct().getPrice()}"></span></p>
         </div>
 
         <div class="flex-item">
           <div class="quantity">
-            <p>Quantity bought: </p>
+            <p>Quantity bought: <span th:text="${product.quantity}"></span></p>
           </div>
         </div>
 
         <div class="flex-item">
           <div class="sub-total">
-            <p>Total: </p>
+            <p>Total: <span th:text="${product.getProduct().getPrice() * product.quantity}"></span></p>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="cart-item">
-      <img src="./templates/girl3.png" alt="Product 2">
-      <div class="cart-item-details">
-        <div class="flex-item">
-          <h3>Product 2</h3>
-          <p class="price">RM199.99</p>
-        </div>
-
-        <div class="flex-item">
-          <div class="quantity">
-            <p>Quantity bought: </p>
-          </div>
-        </div>
-
-        <div class="flex-item sub-total">
-            <p>Total: </p>
         </div>
       </div>
     </div>
@@ -81,19 +61,24 @@
     <div class="user-details">
       <div class="user-item">
         <h4>Username</h4>
-        <p>username placeholder</p>
+        <p th:text="${order.getCustomer().getName()}"></p>
       </div>
       <div class="user-item">
         <h4>Email</h4>
-        <p>email placeholder</p>
+        <p th:text="${order.getCustomer().getEmail()}"></p>
       </div>
       <div class="user-item">
         <h4>Phone no.</h4>
-        <p>phone placeholder</p>
+        <p th:text="${order.getPhonenum()}"></p>
       </div>
       <div class="user-item">
         <h4>Payment method</h4>
-        <p>payment placeholder</p>
+        <div th:switch="${order.getPaymentmethod()}">
+          <p th:case="'credit'">Credit Card</p>
+          <p th:case="'debit'">Debit Card</p>
+          <p th:case="'paypal'">Paypal</p>
+          <p th:case="'touchngo'">Touch 'n Go</p>
+        </div>
       </div>
 
 <!--      this is used for padding purpose-->
@@ -102,46 +87,19 @@
     <h3>
       Shipping to:
     </h3>
-    <p>
-      Jaln UPM, 12345, Selangor
-    </p>
+    <p th:text="${order.getAddress()}"></p>
   </div>
 
   <div class="cart-footer">
-    <p class="total">Total Price: <span class="total-price">RM298.98</span></p>
+    <p class="total">Total Price: <span class="total-price" th:text="${order.totalprice}"></span></p>
   </div>
 
-  <div style="display: grid;">
+  <form style="display: grid;" action="#" th:action="@{/}" method="GET">
     <button class="checkout-btn" style="margin: auto; font-size: 16px;">
       Continue browsing
     </button>
-  </div>
+  </form>
 </section>
-
-<script>
-  const decreaseButtons = document.querySelectorAll('.quantity-btn.decrease');
-  const increaseButtons = document.querySelectorAll('.quantity-btn.increase');
-
-  decreaseButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const input = button.nextElementSibling;
-      const value = parseInt(input.value);
-      if (value > 1) {
-        input.value = value - 1;
-      }
-    });
-  });
-
-  increaseButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const input = button.previousElementSibling;
-      const value = parseInt(input.value);
-      input.value = value + 1;
-    });
-  });
-</script>
-
-
 <footer>
   <div class="footer-content">
     <h3>XieL Clothing</h3>
