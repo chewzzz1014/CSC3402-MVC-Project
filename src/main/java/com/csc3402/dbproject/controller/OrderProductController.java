@@ -6,6 +6,8 @@ import com.csc3402.dbproject.model.Product;
 import com.csc3402.dbproject.repository.CustomerRepository;
 import com.csc3402.dbproject.repository.OrderProductRepository;
 import com.csc3402.dbproject.model.Order;
+
+import java.util.List;
 import java.util.Optional;
 import com.csc3402.dbproject.model.Customer;
 import com.csc3402.dbproject.repository.OrderRepository;
@@ -33,6 +35,7 @@ public class OrderProductController {
         this.productRepository = productRepository;
     }
 
+    // add product to cart from product page
     @GetMapping("/add")
     public RedirectView addProductToCart(@RequestParam("product_id") long product_id, RedirectAttributes attributes) {
         Customer customer = customerRepository.findById(customer_id)
@@ -52,16 +55,28 @@ public class OrderProductController {
                             });
 
 
-        System.out.println(customer);
-        System.out.println(product);
-        System.out.println(foundOrder);
-        OrderProduct orderProduct = new OrderProduct();
-        orderProduct.setId(new OrderProductId(foundOrder.getOrderId(), (int)product_id));
-        orderProduct.setOrder(foundOrder);
-        orderProduct.setProduct(product);
-        orderProduct.setQuantity(1);
-        System.out.println(orderProduct);
-        orderProductRepository.save(orderProduct);
+        // check if item is already in cart, If yes, just increase quanitity
+        List<OrderProduct> products_in_cart = orderProductRepository.getProductsInCart(foundOrder.getOrderId());
+        System.out.println(products_in_cart);
+
+        boolean isFound = false;
+        for(OrderProduct op : products_in_cart) {
+            if(op.getProduct().getProductId() == (int) product_id) {
+                op.setQuantity(op.getQuantity() + 1);
+                orderProductRepository.save(op);
+                isFound = true;
+                break;
+            }
+        }
+
+        if(!isFound) {
+            OrderProduct orderProduct = new OrderProduct();
+            orderProduct.setId(new OrderProductId(foundOrder.getOrderId(), (int)product_id));
+            orderProduct.setOrder(foundOrder);
+            orderProduct.setProduct(product);
+            orderProduct.setQuantity(1);
+            orderProductRepository.save(orderProduct);
+        }
 
         attributes.addAttribute("order_id", foundOrder.getOrderId());
         return new RedirectView("/cart/edit") ;
