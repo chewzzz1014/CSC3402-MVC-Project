@@ -40,14 +40,14 @@
             <!--                can use thymeleaf to loop all the items in the current order here-->
 
             <ul class="list-group mb-3">
-                <div th:each="product, iterStat: ${cartForm.cartList}" >
+                <div th:each="product : ${products}" >
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
                             <h6 class="my-0" th:text="${product.getProduct().getProductname()}"></h6>
                             <small class="text-muted" th:text="${product.getProduct().getDescription()}"></small>
                         </div>
                         <strong>
-                            <span class="text-muted">
+                            <span>
                                 RM<span th:text="${product.getProduct().getPrice()}"></span>
                                 X
                                 <span th:text="${product.quantity}"></span>
@@ -64,20 +64,59 @@
         </div>
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Billing address</h4>
-            <form class="needs-validation" novalidate="">
+            <form
+                    class="needs-validation"
+                    novalidate=""
+                    action="#"
+                    th:action="@{/checkout/update (order_id=${order.orderId})}"
+                    th:object="${order}"
+                    method="POST"
+            >
+                <input
+                        type="hidden"
+                        th:field="*{orderId}"
+                >
+                <input
+                        type="hidden"
+                        th:field="*{totalprice}"
+                >
+
                 <div class="mb-3 col-md-4">
-                    <label for="phone">Phone No. </label>
-                    <input type="phone" class="form-control" id="phone" placeholder="601234567890">
+                    <label for="phonenum">Phone No. </label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="phonenum"
+                            placeholder="601234567890"
+                            th:required="required"
+                            th:field="*{phonenum}"
+                            required
+                    >
+                    <span
+                            th:if="${#fields.hasErrors('phonenum')}" th:errors="*{phonenum}"
+                            class="text-danger">
+                    </span>
                     <div class="invalid-feedback">
-                        Please enter a valid email address for shipping updates.
+                        Please provide phone number.
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">
+                    <label for="address">Shipping Address</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="address"
+                            placeholder="1234 Main St"
+                            th:field="*{address}"
+                            required
+                    >
+                    <span
+                            th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+                            class="text-danger">
+                    </span>
                     <div class="invalid-feedback">
-                        Please enter your shipping address.
+                        Please provide shipping address.
                     </div>
                 </div>
 
@@ -87,21 +126,25 @@
 
                 <div class="d-block my-3">
                     <div class="custom-control custom-radio">
-                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
+                        <input id="credit" name="credit" value="credit" type="radio" class="custom-control-input" th:field="*{paymentmethod}">
                         <label class="custom-control-label" for="credit">Credit card</label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                        <input id="debit" name="debit" value="debit" type="radio" class="custom-control-input" th:field="*{paymentmethod}">
                         <label class="custom-control-label" for="debit">Debit card</label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                        <input id="paypal" name="paypal" value="paypal" type="radio" class="custom-control-input" th:field="*{paymentmethod}">
                         <label class="custom-control-label" for="paypal">Paypal</label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input id="touchngo" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                        <input id="touchngo" name="touchngo" value="touchngo" type="radio" class="custom-control-input" th:field="*{paymentmethod}">
                         <label class="custom-control-label" for="touchngo">Touch 'n Go</label>
                     </div>
+                    <span
+                            th:if="${#fields.hasErrors('paymentmethod')}" th:errors="*{paymentmethod}"
+                            class="text-danger">
+                    </span>
                 </div>
                 <hr class="mb-4">
                 <div style="display: flex; gap: 10px;">

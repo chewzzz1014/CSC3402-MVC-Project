@@ -103,9 +103,9 @@ public class CartController {
     @GetMapping("delete")
     public RedirectView deleteCartProduct(@RequestParam("order_id") long order_id, @RequestParam("product_id") long product_id, Model model, RedirectAttributes attributes) {
         Order order = orderRepository.findById((int)order_id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid staff Id:" + order_id));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid order Id:" + order_id));
         Product product = productRepository.findById((int)product_id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid staff Id:" + product_id));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + product_id));
         orderProductRepository.deleteByOrderAndProduct(order, product);
         attributes.addAttribute("order_id", (int) order_id);
         return new RedirectView("/cart/edit") ;

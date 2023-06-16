@@ -1,7 +1,10 @@
 package com.csc3402.dbproject.model;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 
@@ -14,14 +17,14 @@ public class Order implements Serializable {
     @Column(name = "order_id")
     private Integer orderId;
 
-    @Column(name = "total_price", columnDefinition = "integer default 0")
-    private Integer totalprice;
+    @Column(name = "total_price", columnDefinition = "Decimal(10,2) default 0.00")
+    private float totalprice;
 
     @Column(name = "last_updated", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date last_updated;
+    private Timestamp last_updated;
 
-    @Column(name = "payment_method")
+    @Column(name = "payment_method", columnDefinition = "varchar(250) default 'credit'")
     private String paymentmethod;
 
     @Column(name = "address")
@@ -45,17 +48,17 @@ public class Order implements Serializable {
         this.orderId = orderId;
     }
 
-    public Integer getTotalprice() { return totalprice; }
+    public float getTotalprice() { return totalprice; }
 
-    public void setTotalprice(Integer totalprice) {
+    public void setTotalprice(float totalprice) {
         this.totalprice = totalprice;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return last_updated;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.last_updated = date;
     }
 
@@ -103,7 +106,7 @@ public class Order implements Serializable {
         super();
     }
 
-    public Order(Integer totalprice, Date date, String paymentmethod, String address, String phonenum, Customer customer, Integer hascheckout) {
+    public Order(float totalprice, Timestamp date, String paymentmethod, String address, String phonenum, Customer customer, Integer hascheckout) {
         super();
         this.totalprice = totalprice;
         this.last_updated = date;
