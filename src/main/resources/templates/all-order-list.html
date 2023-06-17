@@ -32,7 +32,7 @@
 <h1 style="text-align: center">My Orders</h1>
 
 <div th:if="${has_item} == 'true'" th:each="d, iterStat: ${data}">
-  <h2 style="text-align: left">Order <span th:text="${iterStat.index + 1}"></span></h2>
+  <h2 style="text-align: left; padding-left: 50px;">Order <span th:text="${iterStat.index + 1}"></span></h2>
   <section>
     <div th:each="product : ${d.itemList}" class="cart" style="margin-top: 0px; margin-bottom: 0px;">
       <div class="cart-item">
@@ -45,7 +45,7 @@
 
           <div class="flex-item">
             <div class="quantity">
-              <p>Quantity: <span th:text="${product.quantity}"></span></p>
+              <p style="font-weight: bold;">Quantity: <span th:text="${product.quantity}"></span></p>
             </div>
           </div>
 
@@ -56,6 +56,10 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="cart-footer" style="background-color: #f5f5f5; margin: 0px 20px;">
+      <p class="total">Total Price: <span class="total-price" th:text="${d.order.totalprice}"></span></p>
     </div>
 
     <div class="shipping-details" style="margin-top: 0px; padding-left: 60px; padding-bottom: 20px;">
@@ -90,16 +94,12 @@
       </h3>
       <p th:text="${d.order.getAddress()}"></p>
     </div>
-
-    <div class="cart-footer">
-      <p class="total">Total Price: <span class="total-price" th:text="${d.order.totalprice}"></span></p>
-    </div>
   </section>
 </div>
 
 <section th:if="${has_item} == 'false'" style="padding: 0px; display: flex; flex-direction: column; justify-content: space-between; width: 100%; height: 80vh;">
   <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 20px;">
-    <h2>No Order Found...</h2>
+    <h2>No Order Found!</h2>
     <form style="display: grid;" action="#" th:action="@{/}" method="GET">
       <button class="checkout-btn" style="margin: auto; font-size: 16px;">
         Continue Shopping
