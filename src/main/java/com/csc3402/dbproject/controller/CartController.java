@@ -69,10 +69,12 @@ public class CartController {
             } else {
                 model.addAttribute("has_item", "false");
             }
-            model.addAttribute("invalid_quantity", 0);
         }catch(Exception e){
             model.addAttribute("has_item", "false");
         }
+
+        model.addAttribute("invalid_quantity", 0);
+        model.addAttribute("invalid_quantity_product", "");
         return "cart";
     }
 
@@ -98,13 +100,9 @@ public class CartController {
             } else {
                 model.addAttribute("has_item", "true");
             }
-
-            if (invalid_quantity != null && invalid_quantity_product != null) {
-                model.addAttribute("invalid_quantity", invalid_quantity);
-                model.addAttribute("invalid_quantity_product", invalid_quantity_product);
-            }else{
-                model.addAttribute("invalid_quantity", 0);
-            }
+            
+            model.addAttribute("invalid_quantity", invalid_quantity);
+            model.addAttribute("invalid_quantity_product", invalid_quantity_product);
         } catch(Exception e) {
             model.addAttribute("has_item", "false");
             e.printStackTrace();
@@ -135,6 +133,8 @@ public class CartController {
                 attributes.addAttribute("invalid_quantity", 1);
                 attributes.addAttribute("invalid_quantity_product", product.getProductname());
             } else {
+                attributes.addAttribute("invalid_quantity", 0);
+                attributes.addAttribute("invalid_quantity_product", "");
                 updated_cart_product.setId(
                         new OrderProductId(updated_cart_product.getOrder().getOrderId(), (int)product_id)
                 );
@@ -163,6 +163,8 @@ public class CartController {
             e.printStackTrace();
         }
 
+        attributes.addAttribute("invalid_quantity", 0);
+        attributes.addAttribute("invalid_quantity_product", "");
         attributes.addAttribute("order_id", (int) order_id);
         return new RedirectView("/cart/edit") ;
     }
