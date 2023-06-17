@@ -39,9 +39,13 @@
             >
                 <img th:src="@{${'/' + product.getProduct().getImage()}}" alt="Product 1">
                 <div class="cart-item-details">
-                    <h3 th:text="${product.getProduct().getProductname()}"></h3>
-                    <p class="price">RM<span th:text="${product.getProduct().getPrice()}"></span></p>
-
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <h3 th:text="${product.getProduct().getProductname()}"></h3>
+                        <p class="price">In Stock: <span th:text="${product.getProduct().getStockquantity()}"></span></p>
+                    </div>
+                    <div style="display: flex; flex-direction: column; justify-content: center; gap: 10px;">
+                        <p class="price">RM<span th:text="${product.getProduct().getPrice()}"></span></p>
+                    </div>
                     <div style="width: 250px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
                         <div class="quantity">
                             <input type="hidden" th:field="*{cartList[__${iterStat.index}__].order}" />
