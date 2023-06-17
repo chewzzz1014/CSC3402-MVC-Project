@@ -28,7 +28,13 @@
 <h1 style="text-align: center;">SHOPPING CART</h1>
 
 <section th:if="${has_item} == 'true'">
-    <div th:if="${is_invalid_quantity} == 'true'" id="invalid-quantity" th:value="${product_name}"></div>
+
+        <input
+                th:if="${invalid_quantity} == 1"
+                type="hidden"
+                id="invalid-quantity-name"
+                th:value="${invalid_quantity_product}"
+        />
 
         <div class="cart">
             <form
@@ -166,10 +172,10 @@
         });
     });
 
-    const invalidQuantity = document.querySelector('#invalid-quantity');
-    invalidQuantity.addEventListener('load', () => {
-            alert('hhiihihihihih');
-    })
+    const invalidQuantity = document.querySelector('#invalid-quantity-name');
+    if(invalidQuantity) {
+        alert(`${invalidQuantity.value} has limited stock!`);
+    }
 </script>
 </body>
 </html>

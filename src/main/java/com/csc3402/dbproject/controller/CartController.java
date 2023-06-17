@@ -69,6 +69,8 @@ public class CartController {
             } else {
                 model.addAttribute("has_item", "false");
             }
+            model.addAttribute("is_invalid_quantity", 0);
+            model.addAttribute("product_name", "");
         }catch(Exception e){
             model.addAttribute("has_item", "false");
         }
@@ -77,7 +79,7 @@ public class CartController {
 
     // display cart based on order id
     @GetMapping("edit")
-    public String displayCartByOrderId(@RequestParam("order_id") long order_id, Model model){
+    public String displayCartByOrderId(@RequestParam("order_id") long order_id, @RequestParam("invalid_quantity") Integer invalid_quantity, @RequestParam("invalid_quantity_product") String invalid_quantity_product, Model model){
         try{
             List<OrderProduct> products_in_cart = orderProductRepository.getProductsInCart((int) order_id);
             CartForm cartForm = new CartForm(products_in_cart);
@@ -96,6 +98,11 @@ public class CartController {
                 model.addAttribute("has_item", "false");
             } else {
                 model.addAttribute("has_item", "true");
+            }
+
+            if (invalid_quantity != null && invalid_quantity_product != null) {
+                model.addAttribute("invalid_quantity", invalid_quantity);
+                model.addAttribute("invalid_quantity_product", invalid_quantity_product);
             }
         } catch(Exception e) {
             model.addAttribute("has_item", "false");
@@ -124,8 +131,8 @@ public class CartController {
 
             // pass back error when attempting to have quantity > quantity in stock
             if (updated_cart_product.getQuantity() > product.getStockquantity()) {
-                model.addAttribute("is_invalid_quantity", "true");
-                model.addAttribute("product_name", product.getProductname());
+                attributes.addAttribute("invalid_quantity", 1);
+                attributes.addAttribute("invalid_quantity_product", product.getProductname());
             } else {
                 updated_cart_product.setId(
                         new OrderProductId(updated_cart_product.getOrder().getOrderId(), (int)product_id)
