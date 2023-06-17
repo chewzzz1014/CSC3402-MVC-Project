@@ -24,6 +24,7 @@ public class OrderListController {
         this.orderProductRepository = orderProductRepository;
     }
 
+    // view the transaction successful order
     @GetMapping("view")
     public String checkoutOrder(@RequestParam("order_id") long order_id, Model model) {
         Order order = orderRepository.findById((int) order_id)
