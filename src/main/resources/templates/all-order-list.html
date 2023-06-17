@@ -29,71 +29,77 @@
   </a>
 </div>
 
-<h2>Purchase Confirmed!</h2>
-<p class="small">Below are the items in your order</p>
+<h1 style="text-align: center">My Orders!</h1>
 
-<section>
-  <div th:each="product : ${products}" class="cart">
-    <div class="cart-item">
-      <img th:src="@{${'/' + product.getProduct().getImage()}}" th:alt="${product.getProduct().getProductname()}">
-      <div class="cart-item-details">
-        <div class="flex-item">
-          <h3 th:text="${product.getProduct().getProductname()}"></h3>
-          <p class="price">RM<span th:text="${product.getProduct().getPrice()}"></span></p>
-        </div>
-
-        <div class="flex-item">
-          <div class="quantity">
-            <p>Quantity bought: <span th:text="${product.quantity}"></span></p>
+<div th:if="${has_item} == 'false'" th:each="d, iterStat: ${data}">
+  <h2>Order <span th:text="${iterStat.index}"></span></h2>
+  <section>
+    <div th:each="product : ${d.itemList}" class="cart">
+      <div class="cart-item">
+        <img th:src="@{${'/' + product.getProduct().getImage()}}" th:alt="${product.getProduct().getProductname()}">
+        <div class="cart-item-details">
+          <div class="flex-item">
+            <h3 th:text="${product.getProduct().getProductname()}"></h3>
+            <p class="price">RM<span th:text="${product.getProduct().getPrice()}"></span></p>
           </div>
-        </div>
 
-        <div class="flex-item">
-          <div class="sub-total">
-            <p>Total: <span th:text="${product.getProduct().getPrice() * product.quantity}"></span></p>
+          <div class="flex-item">
+            <div class="quantity">
+              <p>Quantity bought: <span th:text="${product.quantity}"></span></p>
+            </div>
+          </div>
+
+          <div class="flex-item">
+            <div class="sub-total">
+              <p>Total: <span th:text="${product.getProduct().getPrice() * product.quantity}"></span></p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="shipping-details">
-    <div class="user-details">
-      <div class="user-item">
-        <h4>Username</h4>
-        <p th:text="${order.getCustomer().getName()}"></p>
-      </div>
-      <div class="user-item">
-        <h4>Email</h4>
-        <p th:text="${order.getCustomer().getEmail()}"></p>
-      </div>
-      <div class="user-item">
-        <h4>Phone no.</h4>
-        <p th:text="${order.getPhonenum()}"></p>
-      </div>
-      <div class="user-item">
-        <h4>Payment method</h4>
-        <div th:switch="${order.getPaymentmethod()}">
-          <p th:case="'credit'">Credit Card</p>
-          <p th:case="'debit'">Debit Card</p>
-          <p th:case="'paypal'">Paypal</p>
-          <p th:case="'touchngo'">Touch 'n Go</p>
+    <div class="shipping-details">
+      <div class="user-details">
+        <div class="user-item">
+          <h4>Username</h4>
+          <p th:text="${d.order.getCustomer().getName()}"></p>
         </div>
+        <div class="user-item">
+          <h4>Email</h4>
+          <p th:text="${d.order.getCustomer().getEmail()}"></p>
+        </div>
+        <div class="user-item">
+          <h4>Phone no.</h4>
+          <p th:text="${d.order.getPhonenum()}"></p>
+        </div>
+        <div class="user-item">
+          <h4>Payment method</h4>
+          <div th:switch="${d.order.getPaymentmethod()}">
+            <p th:case="'credit'">Credit Card</p>
+            <p th:case="'debit'">Debit Card</p>
+            <p th:case="'paypal'">Paypal</p>
+            <p th:case="'touchngo'">Touch 'n Go</p>
+          </div>
+        </div>
+
+        <!--      this is used for padding purpose-->
+        <div></div>
       </div>
-
-      <!--      this is used for padding purpose-->
-      <div></div>
+      <h3>
+        Shipping to:
+      </h3>
+      <p th:text="${d.order.getAddress()}"></p>
     </div>
-    <h3>
-      Shipping to:
-    </h3>
-    <p th:text="${order.getAddress()}"></p>
-  </div>
 
-  <div class="cart-footer">
-    <p class="total">Total Price: <span class="total-price" th:text="${order.totalprice}"></span></p>
-  </div>
+    <div class="cart-footer">
+      <p class="total">Total Price: <span class="total-price" th:text="${d.order.totalprice}"></span></p>
+    </div>
+  </section>
+</div>
 
+
+<section th:if="${has_item} == 'false'">
+  <h2>No Order Found</h2>
   <form style="display: grid;" action="#" th:action="@{/}" method="GET">
     <button class="checkout-btn" style="margin: auto; font-size: 16px;">
       Continue browsing

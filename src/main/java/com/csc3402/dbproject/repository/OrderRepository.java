@@ -20,4 +20,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     @Query(value = "SELECT COALESCE(order_id, -1) FROM orders WHERE customer_id = :customer_id AND has_check_out = 0 LIMIT 1", nativeQuery = true)
     Integer getCustomerLatestOrderId2(@Param("customer_id") int customer_id);
+
+    @Query(value = "SELECT * FROM orders WHERE customer_id = :customer_id AND has_check_out = 1", nativeQuery = true)
+    List<Order> getCustomerAllOrder(@Param("customer_id") int customer_id);
 }
