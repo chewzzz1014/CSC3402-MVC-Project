@@ -26,6 +26,8 @@ public class CartController {
     private final OrderRepository orderRepository;
     private final OrderProductRepository orderProductRepository;
     private final ProductRepository productRepository;
+
+    // TODO: customer_id should based on customer_id of current login user
     private Integer customer_id = 2;
 
     CartController(OrderRepository orderRepository, OrderProductRepository orderProductRepository, ProductRepository productRepository) {
@@ -113,13 +115,25 @@ public class CartController {
 
             List<OrderProduct> updated_cart = cartForm.getCartList();
             OrderProduct updated_cart_product = updated_cart.get((int)index);
-            updated_cart_product.setId(
-                    new OrderProductId(updated_cart_product.getOrder().getOrderId(),
-                            updated_cart_product.getProduct().getProductId())
-            );
 
-            // update quantity
-            orderProductRepository.save(updated_cart_product);
+            Product product = productRepository.findById((int)product_id)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + product_id));
+
+            System.out.println(updated_cart_product.getQuantity());
+            System.out.println(product.getStockquantity());
+
+            // pass back error when attempting to have quantity > quantity in stock
+            if (updated_cart_product.getQuantity() > product.getStockquantity()) {
+                model.addAttribute("is_invalid_quantity", "true");
+                model.addAttribute("product_name", product.getProductname());
+            } else {
+                updated_cart_product.setId(
+                        new OrderProductId(updated_cart_product.getOrder().getOrderId(), (int)product_id)
+                );
+
+                // update quantity
+                orderProductRepository.save(updated_cart_product);
+            }
         } catch(Exception e) {
             e.printStackTrace();
         }

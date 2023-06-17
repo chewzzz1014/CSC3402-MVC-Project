@@ -20,6 +20,8 @@ public class OrderListController {
 
     private final OrderRepository orderRepository;
     private final OrderProductRepository orderProductRepository;
+
+    // TODO: customer_id should based on customer_id of current login user
     private Integer customer_id = 2;
 
     public OrderListController(OrderRepository orderRepository, OrderProductRepository orderProductRepository) {

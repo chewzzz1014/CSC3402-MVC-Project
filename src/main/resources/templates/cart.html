@@ -28,6 +28,8 @@
 <h1 style="text-align: center;">SHOPPING CART</h1>
 
 <section th:if="${has_item} == 'true'">
+    <div th:if="${is_invalid_quantity} == 'true'" id="invalid-quantity" th:value="${product_name}"></div>
+
         <div class="cart">
             <form
                     action="#"
@@ -163,6 +165,11 @@
             input.value = value + 1;
         });
     });
+
+    const invalidQuantity = document.querySelector('#invalid-quantity');
+    invalidQuantity.addEventListener('load', () => {
+            alert('hhiihihihihih');
+    })
 </script>
 </body>
 </html>
