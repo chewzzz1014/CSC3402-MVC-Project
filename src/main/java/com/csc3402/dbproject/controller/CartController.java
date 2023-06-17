@@ -69,8 +69,7 @@ public class CartController {
             } else {
                 model.addAttribute("has_item", "false");
             }
-            model.addAttribute("is_invalid_quantity", 0);
-            model.addAttribute("product_name", "");
+            model.addAttribute("invalid_quantity", 0);
         }catch(Exception e){
             model.addAttribute("has_item", "false");
         }
@@ -103,6 +102,8 @@ public class CartController {
             if (invalid_quantity != null && invalid_quantity_product != null) {
                 model.addAttribute("invalid_quantity", invalid_quantity);
                 model.addAttribute("invalid_quantity_product", invalid_quantity_product);
+            }else{
+                model.addAttribute("invalid_quantity", 0);
             }
         } catch(Exception e) {
             model.addAttribute("has_item", "false");
