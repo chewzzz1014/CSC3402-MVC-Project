@@ -49,9 +49,13 @@ public class OrderListController {
                     CheckoutForm currentCheckoutForm = new CheckoutForm(currentProducts, currentOrder);
                     data.add(currentCheckoutForm);
                 }
-                if (data.size() > 0) model.addAttribute("has_item", "true");
+                if (data.size() > 0){
+                    model.addAttribute("has_item", "true");
+                    model.addAttribute("data", data);
+                } else{
+                    model.addAttribute("has_item", "false");
+                }
             }
-            model.addAttribute("data", data);
         }catch(Exception e) {
             e.printStackTrace();
             model.addAttribute("has_item", "false");

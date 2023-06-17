@@ -29,12 +29,12 @@
   </a>
 </div>
 
-<h1 style="text-align: center">My Orders!</h1>
+<h1 style="text-align: center">My Orders</h1>
 
-<div th:if="${has_item} == 'false'" th:each="d, iterStat: ${data}">
-  <h2>Order <span th:text="${iterStat.index}"></span></h2>
+<div th:if="${has_item} == 'true'" th:each="d, iterStat: ${data}">
+  <h2 style="text-align: left">Order <span th:text="${iterStat.index + 1}"></span></h2>
   <section>
-    <div th:each="product : ${d.itemList}" class="cart">
+    <div th:each="product : ${d.itemList}" class="cart" style="margin-top: 0px; margin-bottom: 0px;">
       <div class="cart-item">
         <img th:src="@{${'/' + product.getProduct().getImage()}}" th:alt="${product.getProduct().getProductname()}">
         <div class="cart-item-details">
@@ -45,7 +45,7 @@
 
           <div class="flex-item">
             <div class="quantity">
-              <p>Quantity bought: <span th:text="${product.quantity}"></span></p>
+              <p>Quantity: <span th:text="${product.quantity}"></span></p>
             </div>
           </div>
 
@@ -58,7 +58,7 @@
       </div>
     </div>
 
-    <div class="shipping-details">
+    <div class="shipping-details" style="margin-top: 0px; padding-left: 60px; padding-bottom: 20px;">
       <div class="user-details">
         <div class="user-item">
           <h4>Username</h4>
@@ -97,18 +97,36 @@
   </section>
 </div>
 
+<section th:if="${has_item} == 'false'" style="padding: 0px; display: flex; flex-direction: column; justify-content: space-between; width: 100%; height: 80vh;">
+  <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <h2>No Order Found...</h2>
+    <form style="display: grid;" action="#" th:action="@{/}" method="GET">
+      <button class="checkout-btn" style="margin: auto; font-size: 16px;">
+        Continue Shopping
+      </button>
+    </form>
+  </div>
 
-<section th:if="${has_item} == 'false'">
-  <h2>No Order Found</h2>
-  <form style="display: grid;" action="#" th:action="@{/}" method="GET">
-    <button class="checkout-btn" style="margin: auto; font-size: 16px;">
-      Continue browsing
-    </button>
-  </form>
+  <footer style="padding: 0px;">
+    <div class="footer-content">
+      <h3>XieL Clothing</h3>
+      <p> With a focus on quality craftsmanship and trendy designs, Xiel Clothing Store brings together a curated collection of apparel that caters to diverse fashion
+        preferences. Explore their extensive selection and elevate your wardrobe with their premium offerings.</p>
+      <ul class="socials">
+        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+        <li><a href="#"><i class="fab fa-google-plus"></i></a></li>
+        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2023 Xiel Clothing Store. All rights reserved.</p>
+    </div>
+  </footer>
 </section>
 
 
-<footer>
+<footer th:if="${has_item} == 'true'">
   <div class="footer-content">
     <h3>XieL Clothing</h3>
     <p> With a focus on quality craftsmanship and trendy designs, Xiel Clothing Store brings together a curated collection of apparel that caters to diverse fashion
@@ -124,7 +142,5 @@
     <p>&copy; 2023 Xiel Clothing Store. All rights reserved.</p>
   </div>
 </footer>
-
-
 </body>
 </html>
