@@ -168,7 +168,7 @@
                     </button>
                     <div class="checkout-btn">
                         <a
-                                th:href="@{/cart/edit (order_id=${user_order.orderId})}"
+                                th:href="@{/cart/edit (order_id=${user_order.orderId}, invalid_quantity=0, invalid_quantity_product='')}"
                                 style="color: #fff; text-decoration: none;"
                         >
                             Cancel
