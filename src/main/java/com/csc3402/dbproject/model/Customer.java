@@ -17,6 +17,9 @@ public class Customer {
     @Column(name = "e_mail")
     private String email;
 
+    @Column(name = "password")
+    private String password;
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Order> orders;
 
@@ -24,7 +27,7 @@ public class Customer {
         super();
     }
 
-    public Customer(String name, String email){
+    public Customer(String name, String email, String password){
         super();
         this.name = name;
         this.email = email;
@@ -54,6 +57,14 @@ public class Customer {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Set<Order> getOrders() {
         return orders;
     }
@@ -68,6 +79,7 @@ public class Customer {
                 "customerId=" + customerId +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }
