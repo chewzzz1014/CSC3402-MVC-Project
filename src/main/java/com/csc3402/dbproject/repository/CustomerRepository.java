@@ -11,5 +11,9 @@ import org.springframework.stereotype.Repository;
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     // Find customers by id
     @Query(value = "SELECT * FROM customer where customer_id = :id", nativeQuery = true)
-    Category findByCustomerId(@Param("id") int id);
+    Customer findByCustomerId(@Param("id") int id);
+
+    // Find customers by email
+    @Query(value = "SELECT * FROM customer where e_mail = :email", nativeQuery = true)
+    Customer findByEmail(@Param("email") String email);
 }

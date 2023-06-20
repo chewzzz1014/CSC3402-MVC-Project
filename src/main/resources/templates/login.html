@@ -3,39 +3,34 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title>Welcome to XieL Clothing Store</title>
-  <link rel="stylesheet" th:href="@{/css/login.css}">
+    <title>Welcome to XieL Clothing Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+<!--    <link rel="stylesheet" href="../static/css/login.css">-->
 </head>
 
 <body>
 <h2>Welcome to XieL Clothing Store</h2>
 
-<!--  overlap only -->
 <div class="container" id="container">
-  <div class="form-container sign-up-container">
-    <form action="#">
-      <h1>Create Account</h1>
-
-      <span>Already have an account? <a href="#" id="signInLink">Log In Now</a></span>
-      <input type="text" placeholder="Name" />
-      <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Password" />
-      <button>Sign Up</button>
-    </form>
-  </div>
-
-  <!--  -->
-
-
-  <div class="form-container sign-in-container">
-    <form action="#">
-      <h1>Sign in</h1>
-      <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Password" />
-      <a href="#">Create New Account</a>
-      <button>Sign In</button>
-    </form>
-  </div>
+    <div class="form-container sign-in-container">
+        <form method="POST"
+              role="form"
+              th:action="@{/login}"
+        >
+            <h1>Sign in</h1>
+            <input type="email" placeholder="Email" name="username"/>
+            <input type="password" placeholder="Password" name="password"/>
+            <div th:if="${param.error}">
+                <i style="color: firebrick;">Sorry! You entered invalid username/password.</i>
+            </div>
+            <div th:if="${param.logout}">
+                <i style="color: forestgreen">You have been logged out.</i>
+            </div>
+            <a th:href="@{/registration}">Create New Account</a>
+            <button type="submit">Sign In</button>
+        </form>
+    </div>
 </div>
 
 </body>
