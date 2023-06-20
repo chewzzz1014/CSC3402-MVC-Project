@@ -20,9 +20,6 @@ public class Customer {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "confirmPassword", nullable = false)
-    private String confirmPassword;
-
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Order> orders;
 
