@@ -74,14 +74,6 @@ public class Customer {
         this.orders = orders;
     }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
-
     @Override
     public String toString() {
         return "Customer{" +
