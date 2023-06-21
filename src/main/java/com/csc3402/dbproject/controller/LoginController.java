@@ -42,12 +42,15 @@ public class LoginController {
             result.rejectValue("email", null, "User already registered !!!");
         }
 
+        if (!userDto.getPassword().equals(userDto.getConfirmPassword())) {
+            result.rejectValue("confirmPassword", "error.userDto", "Passwords do not match");
+        }
+
         if (result.hasErrors()) {
             model.addAttribute("user", userDto);
             return "registration";
         }
 
-        System.out.println("UserDto: outside " + userDto);
         userService.saveUser(userDto);
         return "redirect:/registration?success";
     }

@@ -20,9 +20,6 @@ public class Customer {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "confirmPassword", nullable = false)
-    private String confirmPassword;
-
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Order> orders;
 
@@ -75,14 +72,6 @@ public class Customer {
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 
     @Override

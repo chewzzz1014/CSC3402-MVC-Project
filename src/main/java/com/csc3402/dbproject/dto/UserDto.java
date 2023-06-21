@@ -16,7 +16,7 @@ public class UserDto {
     @NotEmpty(message = "Please enter a valid password.")
     private String password;
 
-    @NotEmpty(message = "Please enter the same password.")
+    @NotEmpty(message = "Please confirm your password.")
     private String confirmPassword;
 
     public UserDto() {
