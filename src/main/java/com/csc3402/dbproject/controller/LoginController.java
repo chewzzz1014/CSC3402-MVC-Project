@@ -39,11 +39,19 @@ public class LoginController {
         Customer existingUser = userService.findUserByEmail(userDto.getEmail());
 
         if (existingUser != null) {
-            result.rejectValue("email", null, "User already registered !!!");
+            result.rejectValue(
+                    "email",
+                    null,
+                    "User already registered !!!"
+            );
         }
 
         if (!userDto.getPassword().equals(userDto.getConfirmPassword())) {
-            result.rejectValue("confirmPassword", "error.userDto", "Passwords do not match");
+            result.rejectValue(
+                    "confirmPassword",
+                    "error.userDto",
+                    "Passwords do not match!"
+            );
         }
 
         if (result.hasErrors()) {

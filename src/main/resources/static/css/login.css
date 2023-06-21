@@ -72,7 +72,7 @@ input {
 }
 
 .container {
-    background-color: #FFFFFF;
+    background-color: #F3D0B9;
     border-radius: 10px;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
     0 10px 10px rgba(0, 0, 0, 0.22);
@@ -99,7 +99,7 @@ input {
 .sign-in-image {
     right: 0;
     width: 50%;
-    z-index: 2;
+    z-index: 3;
 }
 
 .sign-up-container {
@@ -121,7 +121,7 @@ input {
 }
 
 .social-container a {
-    border: 1px solid #DDDDDD;
+    border: 1px solid #F3D0B9;
     border-radius: 50%;
     display: inline-flex;
     justify-content: center;
